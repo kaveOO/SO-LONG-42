@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+;/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
@@ -6,7 +6,7 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 14:12:36 by albillie          #+#    #+#             */
-/*   Updated: 2024/11/01 16:38:04 by albillie         ###   ########.fr       */
+/*   Updated: 2024/11/01 22:29:45 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,12 @@
 /* typedef struct player {
 } */
 
+typedef struct s_map {
+	char	**map;
+	int		height;
+	int		width;
+} t_map;
+
 typedef struct s_render {
 	void	*mlx;
 	void	*window;
@@ -35,6 +41,9 @@ typedef struct s_render {
 	int		*img_width;
 	int		*img_height;
 } t_render;
+
+
+void	map_checker(int argc, char **argv);
 
 
 
