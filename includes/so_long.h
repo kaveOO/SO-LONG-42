@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
+# ifndef SO_LONG_H
 #define SO_LONG_H
 
 #include "/home/albillie/Desktop/SO-LONG-42/MLX-42/mlx.h"
@@ -19,8 +19,11 @@
 #include <unistd.h>
 #include <stdio.h>
 
-/* typedef struct player {
-} */
+typedef struct s_player {
+	int	player_x;
+	int	player_y;
+	int	player_m;
+} t_player;
 
 typedef struct s_map {
 	char	**map;
@@ -44,8 +47,6 @@ typedef struct s_render {
 
 
 void	map_checker(int argc, char **argv);
-
-
 
 
 #endif
