@@ -6,7 +6,7 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 14:28:27 by albillie          #+#    #+#             */
-/*   Updated: 2024/11/03 14:29:06 by albillie         ###   ########.fr       */
+/*   Updated: 2024/11/05 07:12:40 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	texture_loader(t_render *game)
 	int		width;
 	int		height;
 
-	game->wall_img = mlx_xpm_file_to_image(game->mlx,
+	game->wall_img = mlx_texture_to_image(game->mlx,
 		"./textures/wall.xpm", &width, &height);
 
 	game->ground_img = mlx_xpm_file_to_image(game->mlx,

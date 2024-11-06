@@ -13,11 +13,13 @@
 # ifndef SO_LONG_H
 #define SO_LONG_H
 
-#include "/home/albillie/Desktop/SO-LONG-42/MLX-42/mlx.h"
+#include "/home/albillie/Desktop/SO-LONG-42/MLX42/mlx42.h"
 #include <stdlib.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <errno.h>
+#include <string.h>
 
 typedef struct s_player {
 	int	player_x;
