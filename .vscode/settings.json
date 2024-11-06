@@ -9,4 +9,5 @@
 		"fcntl.h": "c",
 		"math.h": "c"
 	},
+	"cmake.ignoreCMakeListsMissing": true,
 }

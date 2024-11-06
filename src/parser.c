@@ -6,7 +6,7 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:10:51 by albillie          #+#    #+#             */
-/*   Updated: 2024/11/06 13:16:38 by albillie         ###   ########.fr       */
+/*   Updated: 2024/11/06 22:16:15 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,7 @@ t_map *read_map(int fd)
 		if (current == '\n')
 			map->height++;
 	}
-
-
+	//TODO Faire le Malloc de la map entiere!!!!!!!!!!!!!!!!
 	printf("%d\n", bytes_read);
 	printf("\nHauteur de la map : %d\n", map->height);
 	printf("Largeur de la map : %d\n", map->width);
