@@ -6,11 +6,11 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:10:51 by albillie          #+#    #+#             */
-/*   Updated: 2024/11/06 22:16:15 by albillie         ###   ########.fr       */
+/*   Updated: 2024/11/18 06:35:56 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "/home/albillie/Desktop/SO-LONG-42/includes/so_long.h"
+#include "../includes/so_long.h"
 
 void	check_if_map(char *filename, int argc)
 {
@@ -33,33 +33,29 @@ void	check_if_map(char *filename, int argc)
 	printf("Map (%s) opened!\n", filename);
 }
 
-t_map *read_map(int fd)
+int	count_lines(char *filename)
 {
-	t_map	*map;
-	char	current;
-	int		bytes_read;
+	int		fd;
+	int		lines;
+	char	*line;
 
-	map = malloc(sizeof(t_map));
-	while ((bytes_read = read(fd, &current, 1)) > 0 && current != '\n')
-		map->width++;
-	while ((bytes_read = read(fd, &current, 1)) > 0)
+	lines = 0;
+	fd = open(filename, O_RDONLY);
+	if (fd < 0)
+		return (0);
+	while ((line = get_next_line(fd)) != NULL)
 	{
-		if (current == '\n')
-			map->height++;
+		lines++;
+		free(line);
 	}
-	//TODO Faire le Malloc de la map entiere!!!!!!!!!!!!!!!!
-	printf("%d\n", bytes_read);
-	printf("\nHauteur de la map : %d\n", map->height);
-	printf("Largeur de la map : %d\n", map->width);
-	return (map);
+	close(fd);
+	return(lines);
 }
 
 int main(int argc, char **argv)
 {
-	int fd;
+	(void) argc;
 
-	fd = open("map.ber", O_RDONLY);
+	count_lines(argv[1]);
 
-	check_if_map(argv[1], argc);
-	read_map(fd);
 }

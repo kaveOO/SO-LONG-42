@@ -13,7 +13,9 @@
 # ifndef SO_LONG_H
 #define SO_LONG_H
 
-#include "/home/albillie/Desktop/SO-LONG-42/MLX42/mlx42.h"
+#include "../minilibx/mlx42.h"
+#include "../libft/libft.h"
+#include "../gnl/get_next_line.h"
 #include <stdlib.h>
 #include <fcntl.h>
 #include <unistd.h>
@@ -28,7 +30,7 @@ typedef struct s_player {
 } t_player;
 
 typedef struct s_map {
-	char	**map;
+	char	**grid;
 	int		height;
 	int		width;
 } t_map;
@@ -47,8 +49,7 @@ typedef struct s_render {
 	int		*img_height;
 } t_render;
 
-
 void	map_checker(int argc, char **argv);
-
+char	*get_next_line(int fd);
 
 #endif
