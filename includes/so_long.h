@@ -15,7 +15,6 @@
 
 #include "../minilibx/mlx42.h"
 #include "../libft/libft.h"
-#include "../gnl/get_next_line.h"
 #include <stdlib.h>
 #include <fcntl.h>
 #include <unistd.h>

@@ -6,7 +6,7 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:10:51 by albillie          #+#    #+#             */
-/*   Updated: 2024/11/18 06:35:56 by albillie         ###   ########.fr       */
+/*   Updated: 2024/11/19 07:50:33 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,26 @@ int	count_lines(char *filename)
 	close(fd);
 	return(lines);
 }
+bool	is_map_valid(char *filename)
+{
+	int fd;
+	char *buffer = NULL;
+	fd = open(filename, O_RDONLY);
+	int i = 0;
+
+	while (!ft_strchr(buffer, '\n'))
+	{
+		read(fd, buffer, 1);
+		i++;
+	}
+	printf("%d", i);
+	return true;
+}
+
+
 
 int main(int argc, char **argv)
 {
-	(void) argc;
-
-	count_lines(argv[1]);
-
+	check_if_map(argv[1], argc);
+	is_map_valid(argv[1]);
 }

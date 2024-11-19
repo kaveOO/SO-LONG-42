@@ -6,13 +6,13 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:09:31 by albillie          #+#    #+#             */
-/*   Updated: 2024/11/18 04:56:47 by albillie         ###   ########.fr       */
+/*   Updated: 2024/11/19 06:42:31 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-int	main(int argc, char **argv)
+int	main()
 {
-	map_checker(argc, argv);
+	ft_printf("j'adore le caca puant!");
 }
