@@ -1,6 +1,0 @@
-[submodule "gnl"]
-	path = gnl
-	url = git@github.com:kaveOO/GET-NEXT-LINE-42.git
-[submodule "printf"]
-	path = printf
-	url = git@github.com:kaveOO/PRINTF-42.git

@@ -6,7 +6,7 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:10:51 by albillie          #+#    #+#             */
-/*   Updated: 2024/11/21 01:17:52 by albillie         ###   ########.fr       */
+/*   Updated: 2024/11/21 02:57:21 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,14 @@
 
 bool	check_extension(char *filename, char *extension)
 {
+	const char	*dot;
 
-
-
+	if (!filename || !extension)
+		return false;
+	dot = strrchr(filename, '.');
+	if (!dot)
+		return false;
+	return (strcmp(dot + 1, extension)) == 0;
 }
 
 void	map_checker(char *filename, int argc)
@@ -60,7 +65,9 @@ int	count_lines(char *filename)
 
 int main(int argc, char **argv)
 {
-	check_if_map(argv[1], argc);
-	ft_printf("%d", count_lines(argv[1]));
+	(void) argc;
+	//check_if_map(argv[1], argc);
+	//ft_printf("%d", count_lines(argv[1]));
+	printf("%d", check_extension(argv[1], "ber"));
 }
 
