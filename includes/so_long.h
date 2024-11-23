@@ -48,7 +48,7 @@ typedef struct s_render {
 	int		*img_height;
 } t_render;
 
-void	map_checker(char *filename, int argc);
+void	args_checker(char *filename, int argc);
 char	*get_next_line(int fd);
 
 #endif
