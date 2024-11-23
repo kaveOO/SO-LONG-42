@@ -6,7 +6,7 @@
 #    By: albillie <albillie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/12 21:25:18 by albillie          #+#    #+#              #
-#    Updated: 2024/11/21 02:35:12 by albillie         ###   ########.fr        #
+#    Updated: 2024/11/23 09:28:49 by albillie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ CFLAGS 		+= -Wall -Wextra -Werror -O3
 CLINKS		= -ldl -lglfw -pthread -lm
 
 MLX			= minilibx
-LIBMLX 		= $(MLX)/libmlx42.a
+LIBMLX 		= $(MLX)/build/libmlx42.a
 
 LIB			= libft/libft.a
 
