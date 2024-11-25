@@ -48,6 +48,12 @@ typedef struct s_render {
 	int		*img_height;
 } t_render;
 
+typedef struct s_global {
+	t_player	*player;
+	t_map		*map;
+	t_render	*render;
+} t_global;
+
 void	args_checker(char *filename, int argc);
 char	*get_next_line(int fd);
 

@@ -6,7 +6,7 @@
 #    By: albillie <albillie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/12 21:25:18 by albillie          #+#    #+#              #
-#    Updated: 2024/11/23 09:46:02 by albillie         ###   ########.fr        #
+#    Updated: 2024/11/25 08:51:27 by albillie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME 		= so_long
 CC 			= cc
 RM			= rm -f
 
-CFLAGS 		+= -Wall -Wextra -Werror -O3
+CFLAGS 		+= -Wall -Wextra -Werror -O3 -g
 CLINKS		= -ldl -lglfw -pthread -lm
 
 MLX			= minilibx
