@@ -56,5 +56,6 @@ typedef struct s_global {
 
 void	args_checker(char *filename, int argc);
 char	*get_next_line(int fd);
+int	check_map_size(int fd, t_global *map);
 
 #endif

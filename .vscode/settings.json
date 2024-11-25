@@ -8,7 +8,15 @@
 		"stdlib.h": "c",
 		"fcntl.h": "c",
 		"math.h": "c",
-		"mlx42.h": "c"
+		"mlx42.h": "c",
+		"map": "c",
+		"system_error": "c",
+		"__hash_table": "c",
+		"__tree": "c",
+		"deque": "c",
+		"functional": "c",
+		"type_traits": "c",
+		"version": "c"
 	},
 	"cmake.ignoreCMakeListsMissing": true,
 }
