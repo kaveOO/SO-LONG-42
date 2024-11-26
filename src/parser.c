@@ -6,7 +6,7 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:10:51 by albillie          #+#    #+#             */
-/*   Updated: 2024/11/25 18:28:13 by albillie         ###   ########.fr       */
+/*   Updated: 2024/11/27 00:07:40 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,51 +15,55 @@
 void	args_checker(char *filename, int argc)
 {
 	if (argc < 2)
-	{
-		ft_printf("Error\nPlease enter map name !\n");
-		exit(1);
-	}
+		(ft_printf("Error\nPlease enter map name !\n"), exit(1));
 	else if (argc > 2)
-	{
-		ft_printf("Error\nYou have too much arguments !\n");
-		exit(1);
-	}
+		(ft_printf("Error\nYou have too much arguments !\n"), exit(1));
 	if (!check_if_opened(filename))
-	{
-		ft_printf("Error\nInvalid map name !\n"), exit(1);
-	}
+		(ft_printf("Error\nInvalid map name !\n"), exit(1));
 	if (!check_extension(filename, "ber"))
-	{
-		ft_printf("Error\nMap file extension is invalid !\n");
-		exit(1);
-	}
+		(ft_printf("Error\nMap file extension is invalid !\n"), exit(1));
 	ft_printf("Map (%s) opened!\n", filename);
 }
 
-char	**new_allocate_try(int fd)
+/* void	new_allocate_try(int fd, t_global *game)
 {
 	int i  = 0;
-	char	**array;
 
 	while (get_next_line(fd))
 	{
 		i++;
 	}
-	array = malloc(sizeof(char *) * i + 1);
-	return (array);
-}
+	map = malloc(sizeof(char *) * i);
+} */
 
-void	allocate_try_1(int fd)
+/* t_map	map_allocation(int fd)
 {
-	char *line = get_next_line(fd);
-	printf("%s", line);
-}
+	char *line;
+	t_map map;
+	int i = 0;
 
+	map.height = 0;
+	map.width = 0;
 
+	line = get_next_line(fd);
+	map.grid = malloc(sizeof(char *) * 7);
+	ft_strlcpy(map.grid[i], line, ft_strlen(line) + 1);
+	ft_printf("%s", map.grid[i]);
+	i++;
+	line = get_next_line(fd);
+	while (line != NULL)
+	{
+		map.grid[i] = malloc(sizeof(char) * ft_strlen(line));
+		ft_strlcpy(map.grid[i], line, ft_strlen(line) + 1);
+		ft_printf("%s", map.grid[i]);
+		line = get_next_line(fd);
+		i++;
+	}
+	printf("~%s~", map.grid[1]);
+	return (map);
+} */
 
-
-
-void	allocate_and_fill_map(int fd, t_global *map, int count)
+/* void	allocate_and_fill_map(int fd, t_global *map, int count)
 {
 	char	**line;
 	int		i = 0;
@@ -77,9 +81,17 @@ void	allocate_and_fill_map(int fd, t_global *map, int count)
 	}
 	line[i] = NULL;
 	printf("i = %d\n", i);
-}
+} */
 
-int	check_map_size(int fd, t_global *map)
+/* void	map_size_checker(t_global *game)
+{
+	int	i = 0;
+	while (map[1][i])
+		i++;
+	printf("%d", i);
+} */
+
+/* int	check_map_size(int fd, t_global *map)
 {
 	char	*line;
 	size_t	ref_len;
@@ -110,9 +122,9 @@ int	check_map_size(int fd, t_global *map)
 	if (map->map->height == map->map->width)
 		ft_printf("Error\nYour map is not Rectangle !\n"), exit(1);
 	return (count);
-}
+} */
 
-void	allocate_map(int fd, t_global *map)
+/* void	allocate_map(int fd, t_global *map)
 {
 	int	map_size;
 	int	height;
@@ -134,17 +146,75 @@ void	allocate_map(int fd, t_global *map)
 		i++;
 	}
 	free(map->map->grid);
-}
+} */
 
-void	fill_map(int fd, t_global *map)
+/* void	fill_map(int fd, t_global *map)
 {
 	char	*line;
 	(void) map;
 
 	line = get_next_line(fd);
 	printf("%s", line);
+} */
+
+char *string_filler(const char *s)
+{
+	char *string;
+
+	string = malloc(ft_strlen(s) + 1);
+	if (!string)
+		printf("failed something");
+	strcpy(string, s);
+	return (string);
+}
+void	recursive_checker(int fd, int height)
+{
+	t_map 	*map = NULL;
+	char	*line;
+	int i = 0;
+
+	line = get_next_line(fd);
+	if (line == NULL)
+	{
+		return ;
+	}
+	map->grid = malloc(sizeof(char *) * 1);
+	map->grid[i] = string_filler(line);
+	recursive_checker(fd, height);
 }
 
+int main(int argc, char **argv)
+{
+	//t_global game;
+	t_map *map = NULL;
+	map->height = 0;
+	map->width = 0;
+	//game.map = &map;
+	int fd = open(argv[1], O_RDONLY);
+	int height = 0;
+
+	args_checker(argv[1], argc);
+	recursive_checker(fd, height);
+	printf("%s", map->grid[1]);
+	//printf("~\n%s\n~", map.grid[2]);
+	//printf("%s", game.map->grid[1]);
+	//printf("%s", game.map->grid[1]);
+	//map_size_checker(&game);
+	//allocate_and_fill_map(fd, &game);
+	//int count = check_map_size(fd, &game);
+	//allocate_and_fill_map(fd, &game, count);
+	//check_map_size(fd, &game);
+	//allocate_map(fd, &game);
+	//close(fd);
+	//fd = open(argv[1], O_RDONLY);
+	//fill_map(fd, &game);
+	//is_map_square(fd, &game);
+	//get_map_size(&game);
+	//test_map(game.map->grid);
+	//lines_length(fd);
+	close(fd);
+
+}
 
 
 /* void	is_map_square(t_global *map)
@@ -164,7 +234,7 @@ void	fill_map(int fd, t_global *map)
 	map = malloc(map_size);
 	if (!map)
 		printf("Error\nFailed map allocation !\n"), exit(1);
-	game->map->grid = map;
+	map = map;
 	printf("%d\n", map_size);
 	i = 0;
 	while (map[i])
@@ -199,8 +269,6 @@ void	fill_map(int fd, t_global *map)
 	}
 	printf("\n%c", map[0]);
 } */
-
-
 
 /* void	verify_map(int fd)
 {
@@ -277,33 +345,4 @@ void	fill_map(int fd, t_global *map)
 	open(filename, O_RDONLY);
 } */
 
-
-
-int main(int argc, char **argv)
-{
-	t_global game;
-	t_map map;
-	game.map = &map;
-	int fd = open(argv[1], O_RDONLY);
-
-	args_checker(argv[1], argc);
-	new_allocate_try(fd);
-	//close(fd);
-	//open(argv[1], O_RDONLY);
-	//allocate_try_1(fd);
-	//allocate_and_fill_map(fd, &game);
-	//int count = check_map_size(fd, &game);
-	//allocate_and_fill_map(fd, &game, count);
-	//check_map_size(fd, &game);
-	//allocate_map(fd, &game);
-	//close(fd);
-	//fd = open(argv[1], O_RDONLY);
-	//fill_map(fd, &game);
-	//is_map_square(fd, &game);
-	//get_map_size(&game);
-	//test_map(game.map->grid);
-	//lines_length(fd);
-	close(fd);
-
-}
 
