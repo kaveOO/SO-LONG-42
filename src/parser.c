@@ -6,7 +6,7 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:10:51 by albillie          #+#    #+#             */
-/*   Updated: 2024/11/29 00:28:26 by albillie         ###   ########.fr       */
+/*   Updated: 2024/11/29 00:33:03 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,7 +255,7 @@ void	check_map_closure(char **map, int width, int height)
 		i++;
 	}
 }
-void	check_map_char(char **map, int height)
+void	check_map_char(char **map, int height) // TODO Faire le parsing de l'interieur de la map !
 {
 	int	i;
 	int	j;
