@@ -6,7 +6,7 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:10:51 by albillie          #+#    #+#             */
-/*   Updated: 2024/11/28 13:03:35 by albillie         ###   ########.fr       */
+/*   Updated: 2024/11/29 00:28:26 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,33 +231,60 @@ void	map_checker(char **map, int width, int height)
 {
 	check_map_size(map, width, height);
 	check_map_closure(map, width, height);
+	check_map_char(map, height);
 
 }
+
 void	check_map_closure(char **map, int width, int height)
 {
-	int		i;
-	int		j;
+	int	i;
+	int	j;
+
+	i = 0;
+	j = height - 1;
+	while (map[j][i] != '\n')
+	{
+		if (map[0][i] != '1' || map[height - 1][i] != '1')
+			exit_free("Invalid characters on first or/and last line !", map);
+		while (j > 0)
+		{
+			if (map[j][width - 2] != '1' || map[j][0] != '1')
+				exit_free("Invalid enclosure on sides !", map);
+			j--;
+		}
+		i++;
+	}
+}
+void	check_map_char(char **map, int height)
+{
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;
-	while (map[0][j] != '\n')
+	(void) height;
+	while (map[i][j])
 	{
-		if (map[0][j] != '1' || map[height - 1][j] != '1')
-		{
-			printf("Error\nInvalid character on first and/or last line !\n");
-			free_map(map);
-			exit(1);
-		}
-		else if (map[i][0] != '1' || map[i][width - 2] != '1')
-		{
-			printf("Error\nInvalid character at start/or end of lines !\n");
-			free_map(map);
-			exit(1);
-		}
-		i++;
+		if (map[i][j] == '\n')
+			i++;
+		if (map[i][j] == 'C')
+			printf("FOUND C");
+		printf("%c", map[i][j]);
 		j++;
 	}
 }
+
+void	exit_free(char *str, char **map)
+{
+	if (str)
+	{
+		printf("Error\n%s\n", str);
+		free_map(map);
+		exit(1);
+	}
+}
+
+
 /* void	check_map_char(char **map)
 {
 	int	i;
@@ -298,7 +325,7 @@ void	check_map_size(char **map, int width, int height)
 	if (width == height)
 	{
 		printf("Error\nYour map is square !\n");
-		free(map);
+		free_map(map);
 		exit(1);
 	}
 }
@@ -369,9 +396,9 @@ int main(int argc, char **argv)
 	map = (t_map *)malloc(sizeof(t_map)); //free
 	map->height = get_height(argv[1]);
 	map->width = get_width(argv[1]);
-	//map->grid = ft_creatematrix(map->width, map->height);
 	map->grid = fill_matrix(map->grid, argv[1], map->height);
 	map_checker(map->grid, map->width, map->height);
+	free_map(map->grid);
 	//map_checker(map->grid);
 	return 0;
 	//int height = 0;

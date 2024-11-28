@@ -51,7 +51,8 @@ void	check_map_size(char **map, int width, int height);
 void	free_map(char **map);
 void	map_checker(char **map, int width, int height);
 void	check_map_closure(char **map, int width, int height);
-void	check_map_char(char **map);
+void	check_map_char(char **map, int height);
+void	exit_free(char *str, char **map);
 
 
 #endif
