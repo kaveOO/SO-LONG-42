@@ -35,9 +35,6 @@ typedef struct s_map {
 } t_map;
 
 typedef struct s_render {
-	void	*mlx;
-	void	*window;
-
 	void	*wall_img;
 	void	*ground_img;
 	void	*player_img;
@@ -50,5 +47,10 @@ typedef struct s_render {
 
 void	args_checker(char *filename, int argc);
 char	*get_next_line(int fd);
+void	check_map_size(char **map, int width, int height);
+void	free_map(char **map);
+void	map_checker(char **map, int width, int height);
+void	check_map_closure(char **map, int width, int height);
+
 
 #endif

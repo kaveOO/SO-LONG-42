@@ -6,7 +6,7 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:10:51 by albillie          #+#    #+#             */
-/*   Updated: 2024/11/27 00:07:40 by albillie         ###   ########.fr       */
+/*   Updated: 2024/11/28 03:08:05 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,25 @@
 void	args_checker(char *filename, int argc)
 {
 	if (argc < 2)
-		(ft_printf("Error\nPlease enter map name !\n"), exit(1));
+	{
+		ft_printf("Error\nPlease enter map name !\n");
+		exit(1);
+	}
 	else if (argc > 2)
-		(ft_printf("Error\nYou have too much arguments !\n"), exit(1));
+	{
+		ft_printf("Error\nYou have too much arguments !\n");
+		exit(1);
+	}
 	if (!check_if_opened(filename))
-		(ft_printf("Error\nInvalid map name !\n"), exit(1));
+	{
+		ft_printf("Error\nInvalid map name !\n");
+		exit(1);
+	}
 	if (!check_extension(filename, "ber"))
-		(ft_printf("Error\nMap file extension is invalid !\n"), exit(1));
+	{
+		ft_printf("Error\nMap file extension is invalid !\n");
+		exit(1);
+	}
 	ft_printf("Map (%s) opened!\n", filename);
 }
 
@@ -157,7 +169,7 @@ void	args_checker(char *filename, int argc)
 	printf("%s", line);
 } */
 
-char *string_filler(const char *s)
+/* char *string_filler(const char *s)
 {
 	char *string;
 
@@ -167,9 +179,8 @@ char *string_filler(const char *s)
 	strcpy(string, s);
 	return (string);
 }
-void	recursive_checker(int fd, int height)
+void	recursive_checker(int fd, t_map *map, int height)
 {
-	t_map 	*map = NULL;
 	char	*line;
 	int i = 0;
 
@@ -180,22 +191,179 @@ void	recursive_checker(int fd, int height)
 	}
 	map->grid = malloc(sizeof(char *) * 1);
 	map->grid[i] = string_filler(line);
-	recursive_checker(fd, height);
+	recursive_checker(fd, map ,height);
+} */
+int	get_height(char *filename)
+{
+	int		height;
+	int		fd;
+	char	*line;
+
+	height = 0;
+	fd = open(filename, O_RDONLY);
+	line = get_next_line(fd);
+	while (line)
+	{
+		free(line);
+		line = get_next_line(fd);
+		height++;
+	}
+	free(line);
+	close(fd);
+	return (height);
 }
+int get_width(char *filename)
+{
+	int		width;
+	int		fd;
+	char	*line;
+
+	width = 0;
+	fd = open(filename, O_RDONLY);
+	line = get_next_line(fd);
+	width = ft_strlen(line);
+	free(line);
+	get_next_line(-1);
+	close(fd);
+	return (width);
+}
+void	map_checker(char **map, int width, int height)
+{
+	check_map_size(map, width, height);
+	check_map_closure(map, width, height);
+
+}
+void	check_map_closure(char **map, int width, int height)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	while (map[0][j] != '\n')
+	{
+		if (map[0][j] != '1' || map[height - 1][j] != '1')
+		{
+			printf("Error\nInvalid character on first and/or last line !\n");
+			free_map(map);
+			exit(1);
+		}
+		else if (map[i][0] != '1' || map[i][width - 2] != '1')
+		{
+			printf("Error\nInvalid character at start/or end of lines !\n");
+			free_map(map);
+			exit(1);
+		}
+		i++;
+		j++;
+	}
+	free_map(map);
+}
+void	check_map_char(char **map)
+{
+
+
+
+
+}
+
+void	check_map_size(char **map, int width, int height)
+{
+	int		i;
+	size_t	ref;
+
+	i = 0;
+	ref = ft_strlen(map[i++]);
+	while (map[i])
+	{
+		if (ft_strlen(map[i]) != ref)
+		{
+			printf("Error\nInvalid map line length on line !\n");
+			free_map(map);
+			exit(1);
+		}
+		i++;
+	}
+	if (width == height)
+	{
+		printf("Error\nYour map is square !\n");
+		free(map);
+		exit(1);
+	}
+}
+
+
+/* char	**ft_creatematrix(int width, int height)
+{
+	char	**grid;
+	// int		i;
+	(void) width;
+	grid = malloc(sizeof(char *) * (height + 1));
+	return (grid);
+} */
+
+char	**fill_matrix(char **map, char *filename, int height)
+{
+	int		fd;
+	int		i;
+	char	*line;
+
+	map = malloc(sizeof(char *) * (height + 1));
+	fd = open(filename, O_RDONLY);
+	line = get_next_line(fd);
+	map[0] = line;
+	i = 1;
+	while (i < height)
+	{
+		line = get_next_line(fd);
+		map[i] = line;
+		i++;
+	}
+	map[i] = NULL;
+	get_next_line(-1);
+	close(fd);
+	return (map);
+}
+void	free_map(char **map)
+{
+	int i = 0;
+	while(map && map[i])
+		free(map[i++]);
+	free(map);
+}
+
+/*
+void	map_checker(char **map)
+{
+	printf("%s", map[0]);
+	printf("%s", map[1]);
+	printf("%s", map[2]);
+	printf("%s", map[3]);
+	printf("%s", map[4]);
+	int i = 0;
+	while(map && map[i])
+		free(map[i++]);
+	free(map);
+}*/
+
 
 int main(int argc, char **argv)
 {
-	//t_global game;
-	t_map *map = NULL;
-	map->height = 0;
-	map->width = 0;
-	//game.map = &map;
-	int fd = open(argv[1], O_RDONLY);
-	int height = 0;
-
 	args_checker(argv[1], argc);
-	recursive_checker(fd, height);
-	printf("%s", map->grid[1]);
+	//t_global game;
+	t_map *map;
+	// map.height = 0;
+	// map.width = 0;
+	//game.map = &map;
+	map = (t_map *)malloc(sizeof(t_map)); //free
+	map->height = get_height(argv[1]);
+	map->width = get_width(argv[1]);
+	//map->grid = ft_creatematrix(map->width, map->height);
+	map->grid = fill_matrix(map->grid, argv[1], map->height);
+	map_checker(map->grid, map->width, map->height);
+	//map_checker(map->grid);
+	return 0;
+	//int height = 0;
 	//printf("~\n%s\n~", map.grid[2]);
 	//printf("%s", game.map->grid[1]);
 	//printf("%s", game.map->grid[1]);
@@ -212,7 +380,6 @@ int main(int argc, char **argv)
 	//get_map_size(&game);
 	//test_map(game.map->grid);
 	//lines_length(fd);
-	close(fd);
 
 }
 
