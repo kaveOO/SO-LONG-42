@@ -6,7 +6,7 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:10:51 by albillie          #+#    #+#             */
-/*   Updated: 2024/11/28 03:08:05 by albillie         ###   ########.fr       */
+/*   Updated: 2024/11/28 13:03:35 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,15 +257,26 @@ void	check_map_closure(char **map, int width, int height)
 		i++;
 		j++;
 	}
-	free_map(map);
 }
-void	check_map_char(char **map)
+/* void	check_map_char(char **map)
 {
+	int	i;
+	int	j;
 
 
-
-
-}
+	i = 0;
+	j = 0;
+	while (map[i][j] != '\n')
+	{
+		if (map[i][j] == '1')
+		{
+			i++;
+		}
+		printf
+		i++;
+		j++;
+	}
+} */
 
 void	check_map_size(char **map, int width, int height)
 {
