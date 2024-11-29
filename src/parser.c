@@ -6,7 +6,7 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:10:51 by albillie          #+#    #+#             */
-/*   Updated: 2024/11/29 00:33:03 by albillie         ###   ########.fr       */
+/*   Updated: 2024/11/29 04:23:54 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,7 +231,7 @@ void	map_checker(char **map, int width, int height)
 {
 	check_map_size(map, width, height);
 	check_map_closure(map, width, height);
-	check_map_char(map, height);
+	check_map_char(map, width);
 
 }
 
@@ -255,33 +255,36 @@ void	check_map_closure(char **map, int width, int height)
 		i++;
 	}
 }
-void	check_map_char(char **map, int height) // TODO Faire le parsing de l'interieur de la map !
+void	check_map_char(char **map, int width)
 {
-	int	i;
-	int	j;
+	size_t	i;
+	size_t	j;
+	char	*chars;
 
 	i = 0;
-	j = 0;
-	(void) height;
-	while (map[i][j])
+	chars = "01CEP";
+	while (map[i])
 	{
-		if (map[i][j] == '\n')
-			i++;
-		if (map[i][j] == 'C')
-			printf("FOUND C");
-		printf("%c", map[i][j]);
-		j++;
+		j = width - 2;
+		while (map[i][j])
+		{
+			if (!strchr(chars, map[i][j]))
+			{
+				exit_free("Invalid characters in map !", map);
+			}
+			j--;
+		}
+		i++;
 	}
 }
 
 void	exit_free(char *str, char **map)
 {
-	if (str)
-	{
-		printf("Error\n%s\n", str);
-		free_map(map);
-		exit(1);
-	}
+	if (!str)
+		return ;
+	printf("Error\n%s\n", str);
+	free_map(map);
+	exit(1);
 }
 
 
