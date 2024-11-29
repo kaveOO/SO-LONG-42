@@ -6,7 +6,7 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:10:51 by albillie          #+#    #+#             */
-/*   Updated: 2024/11/29 04:23:54 by albillie         ###   ########.fr       */
+/*   Updated: 2024/11/29 21:32:11 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,162 +37,6 @@ void	args_checker(char *filename, int argc)
 	ft_printf("Map (%s) opened!\n", filename);
 }
 
-/* void	new_allocate_try(int fd, t_global *game)
-{
-	int i  = 0;
-
-	while (get_next_line(fd))
-	{
-		i++;
-	}
-	map = malloc(sizeof(char *) * i);
-} */
-
-/* t_map	map_allocation(int fd)
-{
-	char *line;
-	t_map map;
-	int i = 0;
-
-	map.height = 0;
-	map.width = 0;
-
-	line = get_next_line(fd);
-	map.grid = malloc(sizeof(char *) * 7);
-	ft_strlcpy(map.grid[i], line, ft_strlen(line) + 1);
-	ft_printf("%s", map.grid[i]);
-	i++;
-	line = get_next_line(fd);
-	while (line != NULL)
-	{
-		map.grid[i] = malloc(sizeof(char) * ft_strlen(line));
-		ft_strlcpy(map.grid[i], line, ft_strlen(line) + 1);
-		ft_printf("%s", map.grid[i]);
-		line = get_next_line(fd);
-		i++;
-	}
-	printf("~%s~", map.grid[1]);
-	return (map);
-} */
-
-/* void	allocate_and_fill_map(int fd, t_global *map, int count)
-{
-	char	**line;
-	int		i = 0;
-
-	(void)map;
-	line = malloc((count + 1) * sizeof(char *));
-	line[i] = get_next_line(fd);
-	printf("%s", line[i]);
-	i++;
-	while (i < (count))
-	{
-		line[i] = get_next_line(fd);
-		printf("%s", line[i]);
-		i++;
-	}
-	line[i] = NULL;
-	printf("i = %d\n", i);
-} */
-
-/* void	map_size_checker(t_global *game)
-{
-	int	i = 0;
-	while (map[1][i])
-		i++;
-	printf("%d", i);
-} */
-
-/* int	check_map_size(int fd, t_global *map)
-{
-	char	*line;
-	size_t	ref_len;
-	int		i;
-	int count = 0;
-
-	line = get_next_line(fd);
-	count++;
-	if (!line)
-	{
-		printf("Error\nMap is empty !\n"), exit(1);
-	}
-	ref_len = ft_strlen(line);
-	free(line);
-	i = 0;
-	while ((line = get_next_line(fd)) != NULL)
-	{
-		count++;
-		if (ft_strlen(line) != ref_len)
-		{
-			ft_printf("Error\nInvalid length of lines !\n"), free(line);
-			exit(1);
-		}
-		i++, free(line);
-	}
-	map->map->height = i + 1;
-	map->map->width = ref_len - 1;
-	if (map->map->height == map->map->width)
-		ft_printf("Error\nYour map is not Rectangle !\n"), exit(1);
-	return (count);
-} */
-
-/* void	allocate_map(int fd, t_global *map)
-{
-	int	map_size;
-	int	height;
-	int width;
-	int	i;
-	(void) fd;
-
-	height = map->map->height;
-	width = map->map->width;
-	map_size = height * width;
-
-	map->map->grid = malloc(height + 1);
-	if (!map->map->grid)
-		printf("Error\nAllocation error\n"), exit(1);
-	i = 0;
-	while (i < height)
-	{
-		map->map->grid[i] = malloc(width - 1);
-		i++;
-	}
-	free(map->map->grid);
-} */
-
-/* void	fill_map(int fd, t_global *map)
-{
-	char	*line;
-	(void) map;
-
-	line = get_next_line(fd);
-	printf("%s", line);
-} */
-
-/* char *string_filler(const char *s)
-{
-	char *string;
-
-	string = malloc(ft_strlen(s) + 1);
-	if (!string)
-		printf("failed something");
-	strcpy(string, s);
-	return (string);
-}
-void	recursive_checker(int fd, t_map *map, int height)
-{
-	char	*line;
-	int i = 0;
-
-	line = get_next_line(fd);
-	if (line == NULL)
-	{
-		return ;
-	}
-	map->grid = malloc(sizeof(char *) * 1);
-	map->grid[i] = string_filler(line);
-	recursive_checker(fd, map ,height);
-} */
 int	get_height(char *filename)
 {
 	int		height;
@@ -229,12 +73,16 @@ int get_width(char *filename)
 }
 void	map_checker(char **map, int width, int height)
 {
+	t_elements *elements;
+
+	elements = (t_elements *)ft_calloc(1, sizeof(t_elements));
 	check_map_size(map, width, height);
 	check_map_closure(map, width, height);
 	check_map_char(map, width);
-
+	count_map_chars(map, width, elements);
+	if (!check_chars_counts(elements))
+		free(elements), exit_free("Invalid characters count !", map);
 }
-
 void	check_map_closure(char **map, int width, int height)
 {
 	int	i;
@@ -277,6 +125,29 @@ void	check_map_char(char **map, int width)
 		i++;
 	}
 }
+void	count_map_chars(char **map, int width, t_elements *elements)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (map[i])
+	{
+		j = width - 2;
+		while (map[i][j])
+		{
+			if (strchr("C", map[i][j]))
+				elements->collectible++;
+			if (strchr("E", map[i][j]))
+				elements->exit++;
+			if (strchr("P", map[i][j]))
+				elements->spawn++;
+			j--;
+		}
+		i++;
+	}
+}
 
 void	exit_free(char *str, char **map)
 {
@@ -287,26 +158,6 @@ void	exit_free(char *str, char **map)
 	exit(1);
 }
 
-
-/* void	check_map_char(char **map)
-{
-	int	i;
-	int	j;
-
-
-	i = 0;
-	j = 0;
-	while (map[i][j] != '\n')
-	{
-		if (map[i][j] == '1')
-		{
-			i++;
-		}
-		printf
-		i++;
-		j++;
-	}
-} */
 
 void	check_map_size(char **map, int width, int height)
 {
@@ -332,16 +183,6 @@ void	check_map_size(char **map, int width, int height)
 		exit(1);
 	}
 }
-
-
-/* char	**ft_creatematrix(int width, int height)
-{
-	char	**grid;
-	// int		i;
-	(void) width;
-	grid = malloc(sizeof(char *) * (height + 1));
-	return (grid);
-} */
 
 char	**fill_matrix(char **map, char *filename, int height)
 {
@@ -373,26 +214,11 @@ void	free_map(char **map)
 	free(map);
 }
 
-/*
-void	map_checker(char **map)
-{
-	printf("%s", map[0]);
-	printf("%s", map[1]);
-	printf("%s", map[2]);
-	printf("%s", map[3]);
-	printf("%s", map[4]);
-	int i = 0;
-	while(map && map[i])
-		free(map[i++]);
-	free(map);
-}*/
-
-
-int main(int argc, char **argv)
+/* int main(int argc, char **argv)
 {
 	args_checker(argv[1], argc);
 	//t_global game;
-	t_map *map;
+	t_map 	*map;
 	// map.height = 0;
 	// map.width = 0;
 	//game.map = &map;
@@ -422,135 +248,21 @@ int main(int argc, char **argv)
 	//test_map(game.map->grid);
 	//lines_length(fd);
 
+} */
+
+bool	check_chars_counts(t_elements *elements)
+{
+	if (elements->collectible < 1)
+	{
+		return false;
+	}
+	if (elements->exit < 1 || elements->exit > 1)
+	{
+		return false;
+	}
+	if (elements->spawn < 1 || elements->spawn > 1)
+	{
+		return false;
+	}
+	return true;
 }
-
-
-/* void	is_map_square(t_global *map)
-{
-	if (map->map->height == map->map->width)
-	{
-		printf("Error\nMap is a Square !\n"), exit(1);
-	}
-} */
-/* void	get_map_size(t_global *game)
-{
-	char	**map;
-	int		map_size;
-	int		i;
-
-	map_size = game->map->height * game->map->width;
-	map = malloc(map_size);
-	if (!map)
-		printf("Error\nFailed map allocation !\n"), exit(1);
-	map = map;
-	printf("%d\n", map_size);
-	i = 0;
-	while (map[i])
-	{
-		printf("%s", map[i]);
-	}
-} */
-
-/* void	test_map(char **map)
-{
-	if (!map)
-		printf("Error\n");
-	printf("Printing map !\n");
-	printf("%s", map[0]);
-} */
-
-/* void	allocate_map(int fd)
-{
-	char	*line;
-	int		i;
-	char	*map;
-
-	line = get_next_line(fd);
-	if (!line)
-		printf("Error\n"), exit(1);
-	printf("%s", line);
-	i = 0;
-	while (line[i])
-	{
-		map = malloc(line[i]);
-		i++;
-	}
-	printf("\n%c", map[0]);
-} */
-
-/* void	verify_map(int fd)
-{
-	char	*line;
-	int		i;
-
-	while (line)
-	{
-		while (line[i] != '\n')
-		{
-
-
-		}
-
-
-
-
-
-
-	}
-
-} */
-
-/* void	allocate_entire_map(int fd)
-{
-	int		lines_count;
-	char	*lines;
-	char 	*line;
-	char	*buffer = NULL;
-
-	lines_count = 0;
-	while ((line = get_next_line(fd)) != NULL)
-	{
-		printf("%zu\n", ft_strlen(line));
-		lines_count++;
-	}
-	printf("%d\n", lines_count);
-	lines = malloc(sizeof(char *) * lines_count);
-	if (!lines)
-		printf("Error\nAllocation error !\n"), exit(1);
-	int i = 0;
-	while (read(fd, buffer, 1))
-	{
-		lines = malloc(sizeof(char *) * 1);
-		printf("%c", lines[i]);
-		i++;
-		if (lines[i] == '\n')
-		{
-			printf("NUll car");
-		}
-	}
-} */
-
-/* int	count_lines(char *filename, t_global *s_global)
-{
-	int		fd;
-	int		lines;
-	char	*line;
-
-	lines = 0;
-	fd = open(filename, O_RDONLY);
-	if (fd < 0)
-		return (0);
-	while ((line = get_next_line(fd)) != NULL)
-	{
-		lines++;
-		free(line);
-	}
-	close(fd);
-	return(lines);
-} */
-/* bool	is_map_valid(char *filename)
-{
-	open(filename, O_RDONLY);
-} */
-
-

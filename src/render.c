@@ -6,13 +6,13 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 14:28:27 by albillie          #+#    #+#             */
-/*   Updated: 2024/11/18 05:10:23 by albillie         ###   ########.fr       */
+/*   Updated: 2024/11/29 23:26:54 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "/home/albillie/Desktop/SO-LONG-42/includes/so_long.h"
 
-/* void	texture_loader(t_render *game)
+void	texture_loader(t_render *game)
 {
 	game->wall_img = mlx_texture_to_image(game->mlx,
 		"./textures/wall.xpm");
@@ -20,9 +20,7 @@
 	game->ground_img = mlx_texture_to_image(game->mlx,
 		"./textures/ground.xpm");
 
-	game->player_img = mlx_texture_to_image(game->mlx,
-		"./textures/player.xpm");
-
+	game->player_img = mlx_load_png("");
 	game->collectible_img = mlx_texture_to_image(game->mlx,
 		"./textures/collectible.xpm");
 
@@ -36,15 +34,15 @@
 		exit(1);
 	}
 	printf("Sucessfully loaded textures !\n");
-} */
+}
 
 int main()
 {
-	t_render game;
+	void *mlx;
+	void *img;
 
-	char *str = malloc(1);
-	game.mlx = mlx_init(1920, 1080, "kaveO's SO_LONG", true);
-	str[0] = 6 ;
-	/* texture_loader(&game); */
-	mlx_loop(game.mlx);
+	mlx = mlx_init(1920, 1080, "SO LONG kaveo", true);
+	img = mlx_load_xpm42("textures/exit.xpm");
+	mlx_image_to_wreindow(mlx, img, 0, 0);
+	mlx_loop(mlx);
 }

@@ -6,7 +6,7 @@
 #    By: albillie <albillie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/12 21:25:18 by albillie          #+#    #+#              #
-#    Updated: 2024/11/25 08:51:27 by albillie         ###   ########.fr        #
+#    Updated: 2024/11/29 20:52:50 by albillie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ LIBMLX 		= $(MLX)/build/libmlx42.a
 
 LIB			= libft/libft.a
 
-SRC 		= src/parser.c
+SRC 		=	src/parser.c \
+				src/render.c
 OBJ 		= $(SRC:.c=.o)
 
 all: $(NAME)

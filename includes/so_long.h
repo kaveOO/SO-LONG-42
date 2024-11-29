@@ -34,6 +34,12 @@ typedef struct s_map {
 	int		width;
 } t_map;
 
+typedef struct s_elements {
+	int		collectible;
+	int		exit;
+	int		spawn;
+} t_elements;
+
 typedef struct s_render {
 	void	*wall_img;
 	void	*ground_img;
@@ -51,8 +57,9 @@ void	check_map_size(char **map, int width, int height);
 void	free_map(char **map);
 void	map_checker(char **map, int width, int height);
 void	check_map_closure(char **map, int width, int height);
+void	count_map_chars(char **map, int width, t_elements *elements);
 void	check_map_char(char **map, int width);
 void	exit_free(char *str, char **map);
-
+bool	check_chars_counts(t_elements *elements);
 
 #endif
