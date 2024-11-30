@@ -74,6 +74,7 @@ bool	check_chars_counts(t_elements *elements);
 int		get_height(char *filename);
 int		get_width(char *filename);
 char	**fill_matrix(char **map, char *filename, int height);
+void	hook(void *param);
 
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 14:28:27 by albillie          #+#    #+#             */
-/*   Updated: 2024/11/30 06:08:02 by albillie         ###   ########.fr       */
+/*   Updated: 2024/11/30 17:17:29 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,11 +115,21 @@ int main(int argc, char **argv)
 	{
 		printf("Error when init !\n");
 	}
-
 	texture_loader(game);
 	map_drawer(map, game);
+	mlx_loop_hook(game->mlx, hook, game->mlx);
 
 	mlx_loop(game->mlx);
-	mlx_delete_image(game->mlx, game->wall_img);
-	mlx_delete_image(game->mlx, game->wall_txt);
+	exit_free("etetete", map->grid);
 }
+
+
+void	hook(void *param)
+{
+	if (mlx_is_key_down(param, MLX_KEY_ESCAPE))
+	{
+		mlx_close_window(param);
+	}
+}
+
+
