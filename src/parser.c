@@ -6,7 +6,7 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:10:51 by albillie          #+#    #+#             */
-/*   Updated: 2024/11/30 04:16:15 by albillie         ###   ########.fr       */
+/*   Updated: 2024/12/01 00:27:17 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void	check_map_char(char **map, int width)
 	while (map[i])
 	{
 		j = width - 2;
-		while (map[i][j])
+		while (map[i][j] && j > 0)
 		{
 			if (!strchr(chars, map[i][j]))
 			{
@@ -135,7 +135,7 @@ void	count_map_chars(char **map, int width, t_elements *elements)
 	while (map[i])
 	{
 		j = width - 2;
-		while (map[i][j])
+		while (map[i][j] && j > 0)
 		{
 			if (strchr("C", map[i][j]))
 				elements->collectible++;
