@@ -6,7 +6,7 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:10:51 by albillie          #+#    #+#             */
-/*   Updated: 2024/11/29 21:32:11 by albillie         ###   ########.fr       */
+/*   Updated: 2024/11/30 04:16:15 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,24 +230,6 @@ void	free_map(char **map)
 	free_map(map->grid);
 	//map_checker(map->grid);
 	return 0;
-	//int height = 0;
-	//printf("~\n%s\n~", map.grid[2]);
-	//printf("%s", game.map->grid[1]);
-	//printf("%s", game.map->grid[1]);
-	//map_size_checker(&game);
-	//allocate_and_fill_map(fd, &game);
-	//int count = check_map_size(fd, &game);
-	//allocate_and_fill_map(fd, &game, count);
-	//check_map_size(fd, &game);
-	//allocate_map(fd, &game);
-	//close(fd);
-	//fd = open(argv[1], O_RDONLY);
-	//fill_map(fd, &game);
-	//is_map_square(fd, &game);
-	//get_map_size(&game);
-	//test_map(game.map->grid);
-	//lines_length(fd);
-
 } */
 
 bool	check_chars_counts(t_elements *elements)
