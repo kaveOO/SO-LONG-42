@@ -26,6 +26,8 @@
 typedef struct s_player {
 	int	player_x;
 	int	player_y;
+	int player_new_x;
+	int player_new_y;
 	int	player_m;
 } t_player;
 
@@ -34,6 +36,8 @@ typedef struct s_map {
 	char	*filename;
 	int		height;
 	int		width;
+	int		w_height;
+	int		w_width;
 } t_map;
 
 typedef struct s_elements {
@@ -57,10 +61,15 @@ typedef struct s_render {
 	void	*player_txt;
 	void	*collectible_txt;
 	void	*exit_txt;
-
-	int		*img_width;
-	int		*img_height;
+	t_player	player;
+	t_map		map;
 } t_render;
+
+typedef struct s_global {
+	t_player	player;
+	t_map		map;
+	t_render	render;
+} t_global;
 
 void	args_checker(char *filename, int argc, t_map *map);
 char	*get_next_line(int fd);
@@ -76,6 +85,10 @@ void	get_height(t_map *map);
 void	get_width(t_map *map);
 void	fill_matrix(t_map *map);
 void	hook(void *param);
+void	moove_handler(t_render *game, char key);
+void	change_direction(mlx_key_data_t keydata, void *param);
+void	get_player_pos(t_map *map, t_render *game);
+void	check_direction(t_render *game, char key);
 
 
 #endif

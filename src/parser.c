@@ -6,7 +6,7 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:10:51 by albillie          #+#    #+#             */
-/*   Updated: 2024/12/01 01:00:09 by albillie         ###   ########.fr       */
+/*   Updated: 2024/12/01 06:58:28 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void get_width(t_map *map)
 	width = 0;
 	fd = open(map->filename, O_RDONLY);
 	line = get_next_line(fd);
+	printf("%s", line);
 	map->width = ft_strlen(line);
 	free(line);
 	get_next_line(-1);
@@ -84,6 +85,8 @@ void	map_checker(t_map *map)
 	count_map_chars(map, elements);
 	if (!check_chars_counts(elements))
 		free(elements), exit_free("Invalid characters count !", map->grid);
+	map->w_height = map->height;
+	map->w_width = map->width - 1;
 }
 void	check_map_closure(t_map *map)
 {
@@ -91,15 +94,19 @@ void	check_map_closure(t_map *map)
 	int	j;
 
 	i = 0;
-	j = map->height - 1;
-	while (map->grid[j][i] != '\n')
+	j = 0;
+	while (map->grid[j][i])
 	{
 		if (map->grid[0][i] != '1' || map->grid[map->height - 1][i] != '1')
 			exit_free("Invalid characters on first or/and last line !", map->grid);
 		while (j > 0)
 		{
-			if (map->grid[j][map->width - 2] != '1' || map->grid[j][0] != '1')
+			printf("droite >%c gauche %c", map->grid[j][map->width], map->grid[j][0]);
+			if (map->grid[j][map->width - 4] != '1' || map->grid[j][0] != '1')
+			{
+				printf("%c %c", map->grid[j][map->width], map->grid[j][0]);
 				exit_free("Invalid enclosure on sides !", map->grid);
+			}
 			j--;
 		}
 		i++;
@@ -115,14 +122,14 @@ void	check_map_char(t_map *map)
 	chars = "01CEP";
 	while (map->grid[i])
 	{
-		j = map->width - 2;
-		while (map->grid[i][j] && j > 0)
+		j = 0;
+		while (map->grid[i][j])
 		{
 			if (!strchr(chars, map->grid[i][j]))
 			{
 				exit_free("Invalid characters in map !", map->grid);
 			}
-			j--;
+			j++;
 		}
 		i++;
 	}
@@ -133,19 +140,18 @@ void	count_map_chars(t_map *map, t_elements *elements)
 	int	j;
 
 	i = 0;
-	j = 0;
 	while (map->grid[i])
 	{
-		j = map->width - 2;
-		while (map->grid[i][j] && j > 0)
+		j = 0;
+		while (map->grid[i][j])
 		{
-			if (strchr("C", map->grid[i][j]))
+			if (map->grid[i][j] == 'C')
 				elements->collectible++;
-			if (strchr("E", map->grid[i][j]))
+			if (map->grid[i][j] == 'E')
 				elements->exit++;
-			if (strchr("P", map->grid[i][j]))
+			if (map->grid[i][j] == 'P')
 				elements->spawn++;
-			j--;
+			j++;
 		}
 		i++;
 	}
@@ -191,16 +197,24 @@ void	fill_matrix(t_map *map)
 	int		fd;
 	int		i;
 	char	*line;
+	char	*tmp;
 
 	map->grid = malloc(sizeof(char *) * (map->height + 1));
 	fd = open(map->filename, O_RDONLY);
 	line = get_next_line(fd);
-	map->grid[0] = line;
+	tmp = line;
+	tmp = ft_strtrim(tmp, "\n");
+	free(line);
+	map->grid[0] = tmp;
 	i = 1;
 	while (i < map->height)
 	{
 		line = get_next_line(fd);
-		map->grid[i] = line;
+		tmp = line;
+		tmp = ft_strtrim(tmp, "\n");
+		free(line);
+		map->grid[i] = tmp;
+		printf("%s\n", map->grid[i]);
 		i++;
 	}
 	map->grid[i] = NULL;

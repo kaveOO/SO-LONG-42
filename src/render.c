@@ -6,7 +6,7 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 14:28:27 by albillie          #+#    #+#             */
-/*   Updated: 2024/12/01 01:03:34 by albillie         ###   ########.fr       */
+/*   Updated: 2024/12/01 07:18:25 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,7 @@ void draw_map(t_render *game, char grid, int i, int j)
 	}
 	else if (grid == '1')
 	{
-		printf("avant\n");
 		DRAW(game->mlx, game->wall_txt, j * 40, i * 40);
-		printf("apres\n");
 	}
 	else if (grid == 'C')
 	{
@@ -77,7 +75,6 @@ void	map_drawer(t_map *map, t_render *game) // TODO inverser les axes X - Y pour
 		j = map->width - 2;
 		while (map->grid[i][j])
 		{
-			printf("%c\n", map->grid[i][j]);
 			draw_map(game, map->grid[i][j], i, j);
 			j--;
 		}
@@ -95,27 +92,113 @@ int main(int argc, char **argv)
 
 	args_checker(argv[1], argc, map);
 	map_checker(map);
+	printf("%c", map->grid[1][map->width - 2]);
 
-	game->mlx = mlx_init(map->width * 40, map->height * 40, "SO LONG kaveo", false);
+	game->mlx = mlx_init(map->w_width * 40, map->w_height * 40, "SO LONG kaveo", false);
 	if (!game->mlx)
 	{
 		printf("Error when init !\n");
 	}
 	texture_loader(game);
 	map_drawer(map, game);
-	mlx_loop_hook(game->mlx, hook, game->mlx);
+	get_player_pos(map, game);
+
+	ft_printf("%s", map->grid[1]);
+
+	mlx_key_hook(game->mlx, change_direction, game);
+	// mlx_loop_hook(game->mlx, &hook, (player, game->mlx));
 
 	mlx_loop(game->mlx);
 	exit_free("etetete", map->grid);
 }
 
-
-void	hook(void *param)
+void	change_direction(mlx_key_data_t keydata, void *param)
 {
-	if (mlx_is_key_down(param, MLX_KEY_ESCAPE))
+	t_render *game;
+
+	game = (t_render *) param;
+	if (keydata.action == MLX_PRESS)
 	{
-		mlx_close_window(param);
+		if (keydata.key == MLX_KEY_W || keydata.key == MLX_KEY_UP)
+		{
+			check_direction(game, 'W');
+		}
+		if (keydata.key == MLX_KEY_S || keydata.key == MLX_KEY_DOWN)
+		{
+			moove_handler(game, 'S');
+		}
+		if (keydata.key == MLX_KEY_A || keydata.key == MLX_KEY_LEFT)
+		{
+			moove_handler(game, 'A');
+		}
+		if (keydata.key == MLX_KEY_D || keydata.key == MLX_KEY_RIGHT)
+		{
+			moove_handler(game, 'D');
+		}
 	}
 }
 
+void	check_direction(t_render *game, char key)
+{
+	(void) key;
+	(void) game;
+	ft_printf("test\n");
+	printf("%s", game->map.grid[1]);
+	// ft_printf("%s", game->map.grid[game->player.player_x]);
+/* 	if (game->map.grid[game->player.player_x])
+	{
+	}
+ */
+}
 
+
+void	moove_handler(t_render *game, char key)
+{
+	if (key == 'W')
+	{
+		game->player.player_new_x = game->player.player_x;
+		game->player.player_new_y = game->player.player_y - 1;
+	}
+	else if (key == 'S')
+	{
+		game->player.player_new_x = game->player.player_x;
+		game->player.player_new_y = game->player.player_y + 1;
+	}
+	else if (key == 'A')
+	{
+		game->player.player_new_x = game->player.player_x - 1;
+		game->player.player_new_y = game->player.player_y;
+	}
+	else if (key == 'D')
+	{
+		game->player.player_new_x = game->player.player_x + 1;
+		game->player.player_new_y = game->player.player_y;
+	}
+	DRAW(game->mlx, game->player_txt, game->player.player_new_x * 40, game->player.player_new_y * 40);
+	DRAW(game->mlx, game->ground_txt, game->player.player_x * 40, game->player.player_y * 40);
+	game->player.player_x = game->player.player_new_x;
+	game->player.player_y = game->player.player_new_y;
+}
+
+void	get_player_pos(t_map *map, t_render *game)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	while (map->grid[i])
+	{
+		j = 0;
+		while (map->grid[i][j])
+		{
+			if (map->grid[i][j] == 'P')
+			{
+				game->player.player_x = j;
+				game->player.player_y = i;
+				break;
+			}
+			j++;
+		}
+		i++;
+	}
+}
