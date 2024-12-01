@@ -6,7 +6,7 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:10:51 by albillie          #+#    #+#             */
-/*   Updated: 2024/12/01 06:58:28 by albillie         ###   ########.fr       */
+/*   Updated: 2024/12/01 18:13:39 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,7 +214,7 @@ void	fill_matrix(t_map *map)
 		tmp = ft_strtrim(tmp, "\n");
 		free(line);
 		map->grid[i] = tmp;
-		printf("%s\n", map->grid[i]);
+		// printf("%s\n", map->grid[i]);
 		i++;
 	}
 	map->grid[i] = NULL;

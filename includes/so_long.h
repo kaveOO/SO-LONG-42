@@ -61,8 +61,8 @@ typedef struct s_render {
 	void	*player_txt;
 	void	*collectible_txt;
 	void	*exit_txt;
-	t_player	player;
-	t_map		map;
+	t_player	*player;
+	t_map		*map;
 } t_render;
 
 typedef struct s_global {
@@ -87,7 +87,7 @@ void	fill_matrix(t_map *map);
 void	hook(void *param);
 void	moove_handler(t_render *game, char key);
 void	change_direction(mlx_key_data_t keydata, void *param);
-void	get_player_pos(t_map *map, t_render *game);
+void	get_player_pos(t_map *map, t_render *game, t_player *player);
 void	check_direction(t_render *game, char key);
 
 

@@ -17,7 +17,8 @@
 		"functional": "c",
 		"type_traits": "c",
 		"version": "c",
-		"ios": "c"
+		"ios": "c",
+		"ranges": "c"
 	},
 	"cmake.ignoreCMakeListsMissing": true,
 }
