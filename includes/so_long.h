@@ -31,6 +31,7 @@ typedef struct s_player {
 
 typedef struct s_map {
 	char	**grid;
+	char	*filename;
 	int		height;
 	int		width;
 } t_map;
@@ -61,19 +62,19 @@ typedef struct s_render {
 	int		*img_height;
 } t_render;
 
-void	args_checker(char *filename, int argc);
+void	args_checker(char *filename, int argc, t_map *map);
 char	*get_next_line(int fd);
-void	check_map_size(char **map, int width, int height);
+void	check_map_size(t_map *map);
 void	free_map(char **map);
-void	map_checker(char **map, int width, int height);
-void	check_map_closure(char **map, int width, int height);
-void	count_map_chars(char **map, int width, t_elements *elements);
-void	check_map_char(char **map, int width);
+void	map_checker(t_map *map);
+void	check_map_closure(t_map *map);
+void	count_map_chars(t_map *map, t_elements *elements);
+void	check_map_char(t_map *map);
 void	exit_free(char *str, char **map);
 bool	check_chars_counts(t_elements *elements);
-int		get_height(char *filename);
-int		get_width(char *filename);
-char	**fill_matrix(char **map, char *filename, int height);
+void	get_height(t_map *map);
+void	get_width(t_map *map);
+void	fill_matrix(t_map *map);
 void	hook(void *param);
 
 

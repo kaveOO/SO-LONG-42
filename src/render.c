@@ -6,7 +6,7 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 14:28:27 by albillie          #+#    #+#             */
-/*   Updated: 2024/11/30 17:17:29 by albillie         ###   ########.fr       */
+/*   Updated: 2024/12/01 01:03:34 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,17 +84,6 @@ void	map_drawer(t_map *map, t_render *game) // TODO inverser les axes X - Y pour
 		i++;
 	}
 }
-/* int main()
-{
-	t_render *game;
-	t_map 	*map;
-
-	game = (t_render *)malloc(sizeof(t_render));
-	map = (t_map *)malloc(sizeof(t_map));
-
-	texture_loader(game);
-	map_drawer(map, game);
-} */
 
 int main(int argc, char **argv)
 {
@@ -104,13 +93,10 @@ int main(int argc, char **argv)
 	game = (t_render *)malloc(sizeof(t_render)); // free
 	map = (t_map *)malloc(sizeof(t_map)); // free
 
-	args_checker(argv[1], argc);
-	map->height = get_height(argv[1]);
-	map->width = get_width(argv[1]);
-	map->grid = fill_matrix(map->grid, argv[1], map->height);
-	map_checker(map->grid, map->width, map->height);
+	args_checker(argv[1], argc, map);
+	map_checker(map);
 
-	game->mlx = mlx_init(1920, 1080, "SO LONG kaveo", true);
+	game->mlx = mlx_init(map->width * 40, map->height * 40, "SO LONG kaveo", false);
 	if (!game->mlx)
 	{
 		printf("Error when init !\n");

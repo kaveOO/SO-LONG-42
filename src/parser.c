@@ -6,13 +6,13 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:10:51 by albillie          #+#    #+#             */
-/*   Updated: 2024/12/01 00:27:17 by albillie         ###   ########.fr       */
+/*   Updated: 2024/12/01 01:00:09 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-void	args_checker(char *filename, int argc)
+void	args_checker(char *filename, int argc, t_map *map)
 {
 	if (argc < 2)
 	{
@@ -34,76 +34,78 @@ void	args_checker(char *filename, int argc)
 		ft_printf("Error\nMap file extension is invalid !\n");
 		exit(1);
 	}
+	map->filename = filename;
 	ft_printf("Map (%s) opened!\n", filename);
 }
 
-int	get_height(char *filename)
+void	get_height(t_map *map)
 {
 	int		height;
 	int		fd;
 	char	*line;
 
 	height = 0;
-	fd = open(filename, O_RDONLY);
+	fd = open(map->filename, O_RDONLY);
 	line = get_next_line(fd);
 	while (line)
 	{
 		free(line);
 		line = get_next_line(fd);
-		height++;
+		map->height++;
 	}
 	free(line);
 	close(fd);
-	return (height);
 }
-int get_width(char *filename)
+void get_width(t_map *map)
 {
 	int		width;
 	int		fd;
 	char	*line;
 
 	width = 0;
-	fd = open(filename, O_RDONLY);
+	fd = open(map->filename, O_RDONLY);
 	line = get_next_line(fd);
-	width = ft_strlen(line);
+	map->width = ft_strlen(line);
 	free(line);
 	get_next_line(-1);
 	close(fd);
-	return (width);
 }
-void	map_checker(char **map, int width, int height)
+void	map_checker(t_map *map)
 {
 	t_elements *elements;
 
 	elements = (t_elements *)ft_calloc(1, sizeof(t_elements));
-	check_map_size(map, width, height);
-	check_map_closure(map, width, height);
-	check_map_char(map, width);
-	count_map_chars(map, width, elements);
+	get_height(map);
+	get_width(map);
+	fill_matrix(map);
+	check_map_size(map);
+	check_map_closure(map);
+	check_map_char(map);
+	count_map_chars(map, elements);
 	if (!check_chars_counts(elements))
-		free(elements), exit_free("Invalid characters count !", map);
+		free(elements), exit_free("Invalid characters count !", map->grid);
 }
-void	check_map_closure(char **map, int width, int height)
+void	check_map_closure(t_map *map)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	j = height - 1;
-	while (map[j][i] != '\n')
+	j = map->height - 1;
+	while (map->grid[j][i] != '\n')
 	{
-		if (map[0][i] != '1' || map[height - 1][i] != '1')
-			exit_free("Invalid characters on first or/and last line !", map);
+		if (map->grid[0][i] != '1' || map->grid[map->height - 1][i] != '1')
+			exit_free("Invalid characters on first or/and last line !", map->grid);
 		while (j > 0)
 		{
-			if (map[j][width - 2] != '1' || map[j][0] != '1')
-				exit_free("Invalid enclosure on sides !", map);
+			if (map->grid[j][map->width - 2] != '1' || map->grid[j][0] != '1')
+				exit_free("Invalid enclosure on sides !", map->grid);
 			j--;
 		}
 		i++;
 	}
 }
-void	check_map_char(char **map, int width)
+void	check_map_char(t_map *map)
 {
 	size_t	i;
 	size_t	j;
@@ -111,37 +113,37 @@ void	check_map_char(char **map, int width)
 
 	i = 0;
 	chars = "01CEP";
-	while (map[i])
+	while (map->grid[i])
 	{
-		j = width - 2;
-		while (map[i][j] && j > 0)
+		j = map->width - 2;
+		while (map->grid[i][j] && j > 0)
 		{
-			if (!strchr(chars, map[i][j]))
+			if (!strchr(chars, map->grid[i][j]))
 			{
-				exit_free("Invalid characters in map !", map);
+				exit_free("Invalid characters in map !", map->grid);
 			}
 			j--;
 		}
 		i++;
 	}
 }
-void	count_map_chars(char **map, int width, t_elements *elements)
+void	count_map_chars(t_map *map, t_elements *elements)
 {
 	int	i;
 	int	j;
 
 	i = 0;
 	j = 0;
-	while (map[i])
+	while (map->grid[i])
 	{
-		j = width - 2;
-		while (map[i][j] && j > 0)
+		j = map->width - 2;
+		while (map->grid[i][j] && j > 0)
 		{
-			if (strchr("C", map[i][j]))
+			if (strchr("C", map->grid[i][j]))
 				elements->collectible++;
-			if (strchr("E", map[i][j]))
+			if (strchr("E", map->grid[i][j]))
 				elements->exit++;
-			if (strchr("P", map[i][j]))
+			if (strchr("P", map->grid[i][j]))
 				elements->spawn++;
 			j--;
 		}
@@ -159,52 +161,51 @@ void	exit_free(char *str, char **map)
 }
 
 
-void	check_map_size(char **map, int width, int height)
+void	check_map_size(t_map *map)
 {
 	int		i;
 	size_t	ref;
 
 	i = 0;
-	ref = ft_strlen(map[i++]);
-	while (map[i])
+	ref = ft_strlen(map->grid[i++]);
+	while (map->grid[i])
 	{
-		if (ft_strlen(map[i]) != ref)
+		if (ft_strlen(map->grid[i]) != ref)
 		{
 			printf("Error\nInvalid map line length on line !\n");
-			free_map(map);
+			free_map(map->grid);
 			exit(1);
 		}
 		i++;
 	}
-	if (width == height)
+	if (map->width == map->height)
 	{
 		printf("Error\nYour map is square !\n");
-		free_map(map);
+		free_map(map->grid);
 		exit(1);
 	}
 }
 
-char	**fill_matrix(char **map, char *filename, int height)
+void	fill_matrix(t_map *map)
 {
 	int		fd;
 	int		i;
 	char	*line;
 
-	map = malloc(sizeof(char *) * (height + 1));
-	fd = open(filename, O_RDONLY);
+	map->grid = malloc(sizeof(char *) * (map->height + 1));
+	fd = open(map->filename, O_RDONLY);
 	line = get_next_line(fd);
-	map[0] = line;
+	map->grid[0] = line;
 	i = 1;
-	while (i < height)
+	while (i < map->height)
 	{
 		line = get_next_line(fd);
-		map[i] = line;
+		map->grid[i] = line;
 		i++;
 	}
-	map[i] = NULL;
+	map->grid[i] = NULL;
 	get_next_line(-1);
 	close(fd);
-	return (map);
 }
 void	free_map(char **map)
 {

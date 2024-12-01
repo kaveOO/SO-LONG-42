@@ -16,7 +16,8 @@
 		"deque": "c",
 		"functional": "c",
 		"type_traits": "c",
-		"version": "c"
+		"version": "c",
+		"ios": "c"
 	},
 	"cmake.ignoreCMakeListsMissing": true,
 }
