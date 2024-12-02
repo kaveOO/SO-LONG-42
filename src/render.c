@@ -6,7 +6,7 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 14:28:27 by albillie          #+#    #+#             */
-/*   Updated: 2024/12/02 06:19:31 by albillie         ###   ########.fr       */
+/*   Updated: 2024/12/02 20:05:55 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,18 @@ void	texture_loader(t_render *game)
 	game->collectible_img[6] = mlx_load_png("textures/coin_7.png");
 	game->exit_img = mlx_load_png("textures/exit.png");
 
+	// mlx_delete_texture(game->wall_img);
+	// mlx_delete_texture(game->ground_img);
+	// mlx_delete_texture(game->player_img);
+	// mlx_delete_texture(game->exit_img);
+	// mlx_delete_texture(game->collectible_img[0]);
+	// mlx_delete_texture(game->collectible_img[1]);
+	// mlx_delete_texture(game->collectible_img[2]);
+	// mlx_delete_texture(game->collectible_img[3]);
+	// mlx_delete_texture(game->collectible_img[4]);
+	// mlx_delete_texture(game->collectible_img[5]);
+	// mlx_delete_texture(game->collectible_img[6]);
+
 	game->wall_txt = mlx_texture_to_image(game->mlx, game->wall_img);
 	game->ground_txt = mlx_texture_to_image(game->mlx, game->ground_img);
 	game->player_txt = mlx_texture_to_image(game->mlx, game->player_img);
@@ -37,6 +49,18 @@ void	texture_loader(t_render *game)
 	game->collectible_txt[5] = mlx_texture_to_image(game->mlx, game->collectible_img[5]);
 	game->collectible_txt[6] = mlx_texture_to_image(game->mlx, game->collectible_img[6]);
 	game->exit_txt = mlx_texture_to_image(game->mlx, game->exit_img);
+
+	mlx_delete_texture(game->wall_img);
+	mlx_delete_texture(game->ground_img);
+	mlx_delete_texture(game->player_img);
+	mlx_delete_texture(game->exit_img);
+	mlx_delete_texture(game->collectible_img[0]);
+	mlx_delete_texture(game->collectible_img[1]);
+	mlx_delete_texture(game->collectible_img[2]);
+	mlx_delete_texture(game->collectible_img[3]);
+	mlx_delete_texture(game->collectible_img[4]);
+	mlx_delete_texture(game->collectible_img[5]);
+	mlx_delete_texture(game->collectible_img[6]);
 
 
 	if (!game->wall_img || !game->ground_img || !game->player_img ||
@@ -80,16 +104,13 @@ void	loop_collectibles(void *param)
 	t_render *game;
 
 	game = (t_render *) param;
-	while (true)
-	{
-		DRAW(game->mlx, game->collectible_txt[0], 0 * TS, 0 * TS);
-		DRAW(game->mlx, game->collectible_txt[1], 0 * TS, 0 * TS);
-		DRAW(game->mlx, game->collectible_txt[2], 0 * TS, 0 * TS);
-		DRAW(game->mlx, game->collectible_txt[3], 0 * TS, 0 * TS);
-		DRAW(game->mlx, game->collectible_txt[4], 0 * TS, 0 * TS);
-		DRAW(game->mlx, game->collectible_txt[5], 0 * TS, 0 * TS);
-		DRAW(game->mlx, game->collectible_txt[6], 0 * TS, 0 * TS);
-	}
+	DRAW(game->mlx, game->collectible_txt[0], 0 * TS, 0 * TS);
+	DRAW(game->mlx, game->collectible_txt[1], 0 * TS, 0 * TS);
+	DRAW(game->mlx, game->collectible_txt[2], 0 * TS, 0 * TS);
+	DRAW(game->mlx, game->collectible_txt[3], 0 * TS, 0 * TS);
+	DRAW(game->mlx, game->collectible_txt[4], 0 * TS, 0 * TS);
+	DRAW(game->mlx, game->collectible_txt[5], 0 * TS, 0 * TS);
+	DRAW(game->mlx, game->collectible_txt[6], 0 * TS, 0 * TS);
 }
 void	map_drawer(t_map *map, t_render *game) // TODO inverser les axes X - Y pour l'affichage
 {
@@ -120,6 +141,8 @@ int main(int argc, char **argv)
 	map = (t_map *)malloc(sizeof(t_map)); // free
 
 	args_checker(argv[1], argc, map);
+	map->height = 0;
+	map->width = 0;
 	map_checker(map);
 	int i = 0;
 	while (map->grid[i])
@@ -138,9 +161,9 @@ int main(int argc, char **argv)
 	texture_loader(game);
 	map_drawer(map, game);
 	player = (t_player *)malloc(sizeof(t_player));
+	player->player_m = 0;
 	get_player_pos(map, game, player);
 
-	// mlx_loop_hook(game->mlx, loop_collectibles, game); fait crash le pc
 	mlx_key_hook(game->mlx, change_direction, game);
 	mlx_loop(game->mlx);
 }
@@ -153,25 +176,15 @@ void	change_direction(mlx_key_data_t keydata, void *param)
 	if (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT)
 	{
 		if (keydata.key == MLX_KEY_ESCAPE)
-		{
 			close_game(game);
-		}
 		if (keydata.key == MLX_KEY_W || keydata.key == MLX_KEY_UP)
-		{
 			check_direction(game, 'W');
-		}
 		if (keydata.key == MLX_KEY_S || keydata.key == MLX_KEY_DOWN)
-		{
 			check_direction(game, 'S');
-		}
 		if (keydata.key == MLX_KEY_A || keydata.key == MLX_KEY_LEFT)
-		{
 			check_direction(game, 'A');
-		}
 		if (keydata.key == MLX_KEY_D || keydata.key == MLX_KEY_RIGHT)
-		{
 			check_direction(game, 'D');
-		}
 	}
 }
 

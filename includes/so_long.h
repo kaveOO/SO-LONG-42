@@ -24,6 +24,8 @@
 #include <errno.h>
 #include <string.h>
 
+// * GAME STRUCTURE
+
 typedef struct s_player {
 	int	player_x;
 	int	player_y;
@@ -31,6 +33,8 @@ typedef struct s_player {
 	int player_new_y;
 	int	player_m;
 } t_player;
+
+// * MAP STRUCTURE
 
 typedef struct s_map {
 	char	**grid;
@@ -68,6 +72,8 @@ typedef struct s_global {
 	t_map		*map;
 	t_render	*render;
 } t_global;
+
+// * GAME FUNCTIONS
 
 void	args_checker(char *filename, int argc, t_map *map);
 char	*get_next_line(int fd);

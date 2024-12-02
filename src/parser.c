@@ -6,7 +6,7 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:10:51 by albillie          #+#    #+#             */
-/*   Updated: 2024/12/02 05:46:44 by albillie         ###   ########.fr       */
+/*   Updated: 2024/12/02 20:24:53 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,13 @@ void	args_checker(char *filename, int argc, t_map *map)
 		exit(1);
 	}
 	map->filename = filename;
-	ft_printf("Map (%s) opened!\n", filename);
 }
 
 void	get_height(t_map *map)
 {
-	int		height;
 	int		fd;
 	char	*line;
 
-	height = 0;
 	fd = open(map->filename, O_RDONLY);
 	line = get_next_line(fd);
 	while (line)
@@ -58,11 +55,9 @@ void	get_height(t_map *map)
 }
 void get_width(t_map *map)
 {
-	int		width;
 	int		fd;
 	char	*line;
 
-	width = 0;
 	fd = open(map->filename, O_RDONLY);
 	line = get_next_line(fd);
 	printf("%s", line);
@@ -73,6 +68,10 @@ void get_width(t_map *map)
 }
 void	map_checker(t_map *map)
 {
+	map->collectible = 0;
+	map->exit = 0;
+	map->spawn = 0;
+
 	get_height(map);
 	get_width(map);
 	fill_matrix(map);
@@ -100,7 +99,6 @@ void	check_map_closure(t_map *map)
 		{
 			if (map->grid[j][map->width - 4] != '1' || map->grid[j][0] != '1')
 			{
-				printf("%c %c", map->grid[j][map->width], map->grid[j][0]);
 				exit_free("Invalid enclosure on sides !", map->grid);
 			}
 			j--;
@@ -224,39 +222,22 @@ void	free_map(char **map)
 	free(map);
 }
 
-/* int main(int argc, char **argv)
-{
-	args_checker(argv[1], argc);
-	//t_global game;
-	t_map 	*map;
-	// map.height = 0;
-	// map.width = 0;
-	//game.map = &map;
-	map = (t_map *)malloc(sizeof(t_map)); //free
-	map->height = get_height(argv[1]);
-	map->width = get_width(argv[1]);
-	map->grid = fill_matrix(map->grid, argv[1], map->height);
-	map_checker(map->grid, map->width, map->height);
-	free_map(map->grid);
-	//map_checker(map->grid);
-	return 0;
-} */
-
 void	close_game(t_render *render)
 {
-	mlx_delete_image(render->mlx, render->collectible_img[0]);
-	mlx_delete_image(render->mlx, render->player_img);
-	mlx_delete_image(render->mlx, render->exit_img);
-	mlx_delete_image(render->mlx, render->ground_img);
-	mlx_delete_image(render->mlx, render->wall_img);
-
 	mlx_delete_image(render->mlx, render->collectible_txt[0]);
+	mlx_delete_image(render->mlx, render->collectible_txt[1]);
+	mlx_delete_image(render->mlx, render->collectible_txt[2]);
+	mlx_delete_image(render->mlx, render->collectible_txt[3]);
+	mlx_delete_image(render->mlx, render->collectible_txt[4]);
+	mlx_delete_image(render->mlx, render->collectible_txt[5]);
+	mlx_delete_image(render->mlx, render->collectible_txt[6]);
 	mlx_delete_image(render->mlx, render->player_txt);
 	mlx_delete_image(render->mlx, render->exit_txt);
 	mlx_delete_image(render->mlx, render->ground_txt);
 	mlx_delete_image(render->mlx, render->wall_txt);
 	free_map(render->map->grid);
 	mlx_close_window(render->mlx);
+	mlx_terminate(render->mlx);
 }
 
 bool	check_chars_counts(t_map *elements)
