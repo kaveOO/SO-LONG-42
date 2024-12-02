@@ -6,7 +6,7 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 14:28:27 by albillie          #+#    #+#             */
-/*   Updated: 2024/12/02 05:38:41 by albillie         ###   ########.fr       */
+/*   Updated: 2024/12/02 05:40:45 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	texture_loader(t_render *game)
 {
 	game->wall_img = mlx_load_png("textures/wall.png");
 	game->ground_img = mlx_load_png("textures/ground.png");
-	game->player_img = mlx_load_png("textures/goblin3.png");
+	game->player_img = mlx_load_png("textures/king.png");
 	game->collectible_img = mlx_load_png("textures/coin1.png");
 	game->exit_img = mlx_load_png("textures/exit.png");
 
