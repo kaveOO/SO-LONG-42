@@ -13,6 +13,7 @@
 # ifndef SO_LONG_H
 #define SO_LONG_H
 #define DRAW mlx_image_to_window
+#define TS 32
 
 #include "../minilibx/mlx42.h"
 #include "../libft/libft.h"
@@ -38,13 +39,10 @@ typedef struct s_map {
 	int		width;
 	int		w_height;
 	int		w_width;
-} t_map;
-
-typedef struct s_elements {
 	int		collectible;
 	int		exit;
 	int		spawn;
-} t_elements;
+} t_map;
 
 typedef struct s_render {
 	void	*mlx;
@@ -59,16 +57,16 @@ typedef struct s_render {
 	void	*wall_txt;
 	void	*ground_txt;
 	void	*player_txt;
-	void	*collectible_txt;
+	void	*collectible_txt[];
 	void	*exit_txt;
 	t_player	*player;
 	t_map		*map;
 } t_render;
 
 typedef struct s_global {
-	t_player	player;
-	t_map		map;
-	t_render	render;
+	t_player	*player;
+	t_map		*map;
+	t_render	*render;
 } t_global;
 
 void	args_checker(char *filename, int argc, t_map *map);
@@ -77,10 +75,10 @@ void	check_map_size(t_map *map);
 void	free_map(char **map);
 void	map_checker(t_map *map);
 void	check_map_closure(t_map *map);
-void	count_map_chars(t_map *map, t_elements *elements);
+void	count_map_chars(t_map *map);
 void	check_map_char(t_map *map);
 void	exit_free(char *str, char **map);
-bool	check_chars_counts(t_elements *elements);
+bool	check_chars_counts(t_map *map);
 void	get_height(t_map *map);
 void	get_width(t_map *map);
 void	fill_matrix(t_map *map);
@@ -89,6 +87,11 @@ void	moove_handler(t_render *game, char key);
 void	change_direction(mlx_key_data_t keydata, void *param);
 void	get_player_pos(t_map *map, t_render *game, t_player *player);
 void	check_direction(t_render *game, char key);
+void	close_game(t_render *render);
+void	init_game(t_global *game);
+void	collectible_handler(t_render *game);
+void	update_textures(t_render *game);
+
 
 
 #endif

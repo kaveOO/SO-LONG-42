@@ -6,7 +6,7 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 14:28:27 by albillie          #+#    #+#             */
-/*   Updated: 2024/12/01 19:41:08 by albillie         ###   ########.fr       */
+/*   Updated: 2024/12/02 05:38:41 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	texture_loader(t_render *game)
 {
 	game->wall_img = mlx_load_png("textures/wall.png");
 	game->ground_img = mlx_load_png("textures/ground.png");
-	game->player_img = mlx_load_png("textures/goblin1.png");
+	game->player_img = mlx_load_png("textures/goblin3.png");
 	game->collectible_img = mlx_load_png("textures/coin1.png");
 	game->exit_img = mlx_load_png("textures/exit.png");
 
@@ -40,26 +40,26 @@ void draw_map(t_render *game, char grid, int i, int j)
 {
 	if (grid == '0')
 	{
-		DRAW(game->mlx, game->ground_txt, j * 40, i * 40);
+		DRAW(game->mlx, game->ground_txt, j * TS, i * TS);
 	}
 	else if (grid == '1')
 	{
-		DRAW(game->mlx, game->wall_txt, j * 40, i * 40);
+		DRAW(game->mlx, game->wall_txt, j * TS, i * TS);
 	}
 	else if (grid == 'C')
 	{
-		DRAW(game->mlx, game->ground_txt, j * 40, i * 40);
-		DRAW(game->mlx, game->collectible_txt, j * 40 + 5, i * 40 + 5);
+		DRAW(game->mlx, game->ground_txt, j * TS, i * TS);
+		DRAW(game->mlx, game->collectible_txt, j * TS, i * TS);
 	}
 	else if (grid == 'E')
 	{
-		DRAW(game->mlx, game->ground_txt, j * 40, i * 40);
-		DRAW(game->mlx, game->exit_txt, j * 40, i * 40);
+		DRAW(game->mlx, game->ground_txt, j * TS, i * TS);
+		DRAW(game->mlx, game->exit_txt, j * TS, i * TS);
 	}
 	else if (grid == 'P')
 	{
-		DRAW(game->mlx, game->ground_txt, j * 40, i * 40);
-		DRAW(game->mlx, game->player_txt, j * 40, i * 40);
+		DRAW(game->mlx, game->ground_txt, j * TS, i * TS);
+		DRAW(game->mlx, game->player_txt, j * TS, i * TS);
 	}
 }
 
@@ -72,11 +72,11 @@ void	map_drawer(t_map *map, t_render *game) // TODO inverser les axes X - Y pour
 	i = 0;
 	while (map->grid[i])
 	{
-		j = map->width - 2;
+		j = 0;
 		while (map->grid[i][j])
 		{
 			draw_map(game, map->grid[i][j], i, j);
-			j--;
+			j++;
 		}
 		i++;
 	}
@@ -102,7 +102,7 @@ int main(int argc, char **argv)
 	game->map = map;
 
 
-	game->mlx = mlx_init(map->w_width * 40, map->w_height * 40, "SO LONG kaveo", false);
+	game->mlx = mlx_init(map->w_width * TS, map->w_height * TS, "SO LONG kaveo", false);
 	if (!game->mlx)
 	{
 		printf("Error when init !\n");
@@ -114,10 +114,7 @@ int main(int argc, char **argv)
 	ft_printf("%s", map->grid[1]);
 
 	mlx_key_hook(game->mlx, change_direction, game);
-	// mlx_loop_hook(game->mlx, &hook, (player, game->mlx));
-
 	mlx_loop(game->mlx);
-	exit_free("etetete", map->grid);
 }
 
 void	change_direction(mlx_key_data_t keydata, void *param)
@@ -129,7 +126,7 @@ void	change_direction(mlx_key_data_t keydata, void *param)
 	{
 		if (keydata.key == MLX_KEY_ESCAPE)
 		{
-			mlx_close_window(game->mlx); //TODO Make function to free all the data then close the window properly
+			close_game(game);
 		}
 		if (keydata.key == MLX_KEY_W || keydata.key == MLX_KEY_UP)
 		{
@@ -152,19 +149,23 @@ void	change_direction(mlx_key_data_t keydata, void *param)
 
 void	check_direction(t_render *game, char key)
 {
-	if (game->map->grid[game->player->player_y - 1][game->player->player_x] != '1' && key == 'W')
+	if (game->map->grid[game->player->player_y - 1]
+		[game->player->player_x] != '1' && key == 'W')
 	{
 		moove_handler(game, 'W');
 	}
-	if (game->map->grid[game->player->player_y + 1][game->player->player_x] != '1' && key == 'S')
+	if (game->map->grid[game->player->player_y + 1]
+		[game->player->player_x] != '1' && key == 'S')
 	{
 		moove_handler(game, 'S');
 	}
-	if (game->map->grid[game->player->player_y][game->player->player_x - 1] != '1' && key == 'A')
+	if (game->map->grid[game->player->player_y]
+		[game->player->player_x - 1] != '1' && key == 'A')
 	{
 		moove_handler(game, 'A');
 	}
-	if (game->map->grid[game->player->player_y][game->player->player_x + 1] != '1' && key == 'D')
+	if (game->map->grid[game->player->player_y]
+		[game->player->player_x + 1] != '1' && key == 'D')
 	{
 		moove_handler(game, 'D');
 	}
@@ -192,10 +193,43 @@ void	moove_handler(t_render *game, char key)
 		game->player->player_new_x = game->player->player_x + 1;
 		game->player->player_new_y = game->player->player_y;
 	}
-	DRAW(game->mlx, game->player_txt, game->player->player_new_x * 40, game->player->player_new_y * 40);
-	DRAW(game->mlx, game->ground_txt, game->player->player_x * 40, game->player->player_y * 40);
+	update_textures(game);
 	game->player->player_x = game->player->player_new_x;
 	game->player->player_y = game->player->player_new_y;
+	game->player->player_m += 1;
+	mlx_image_to_window(game->mlx, game->wall_txt, 0 * TS, 0 * TS);
+	mlx_image_to_window(game->mlx, game->wall_txt, 1 * TS, 0 * TS);
+	mlx_image_to_window(game->mlx, game->wall_txt, 2 * TS, 0 * TS);
+	mlx_put_string(game->mlx, ft_itoa(game->player->player_m), 0, 0);
+	collectible_handler(game);
+}
+void	update_textures(t_render *game)
+{
+	if (game->map->grid[game->player->player_y][game->player->player_x] == 'E')
+	{
+		DRAW(game->mlx, game->player_txt, game->player->player_new_x * TS, game->player->player_new_y * TS);
+		DRAW(game->mlx, game->exit_txt, game->player->player_x * TS, game->player->player_y * TS);
+	}
+	else
+	{
+		DRAW(game->mlx, game->player_txt, game->player->player_new_x * TS, game->player->player_new_y * TS);
+		DRAW(game->mlx, game->ground_txt, game->player->player_x * TS, game->player->player_y * TS);
+	}
+}
+
+void	collectible_handler(t_render *game)
+{
+	if (game->map->grid[game->player->player_new_y][game->player->player_new_x] == 'C')
+	{
+		ft_printf("You are on collectible");
+		game->map->grid[game->player->player_new_y][game->player->player_new_x] = '0';
+		game->map->collectible--;
+		ft_printf("%d", game->map->collectible);
+	}
+	if (game->map->grid[game->player->player_new_y][game->player->player_new_x] == 'E' && game->map->collectible == 0)
+	{
+		mlx_close_window(game->mlx);
+	}
 }
 
 void	get_player_pos(t_map *map, t_render *game, t_player *player)

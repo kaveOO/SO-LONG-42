@@ -6,7 +6,7 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:10:51 by albillie          #+#    #+#             */
-/*   Updated: 2024/12/01 18:13:39 by albillie         ###   ########.fr       */
+/*   Updated: 2024/12/02 04:47:40 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,18 +73,15 @@ void get_width(t_map *map)
 }
 void	map_checker(t_map *map)
 {
-	t_elements *elements;
-
-	elements = (t_elements *)ft_calloc(1, sizeof(t_elements));
 	get_height(map);
 	get_width(map);
 	fill_matrix(map);
 	check_map_size(map);
 	check_map_closure(map);
 	check_map_char(map);
-	count_map_chars(map, elements);
-	if (!check_chars_counts(elements))
-		free(elements), exit_free("Invalid characters count !", map->grid);
+	count_map_chars(map);
+	if (!check_chars_counts(map))
+		free(map), exit_free("Invalid characters count !", map->grid);
 	map->w_height = map->height;
 	map->w_width = map->width - 1;
 }
@@ -101,7 +98,6 @@ void	check_map_closure(t_map *map)
 			exit_free("Invalid characters on first or/and last line !", map->grid);
 		while (j > 0)
 		{
-			printf("droite >%c gauche %c", map->grid[j][map->width], map->grid[j][0]);
 			if (map->grid[j][map->width - 4] != '1' || map->grid[j][0] != '1')
 			{
 				printf("%c %c", map->grid[j][map->width], map->grid[j][0]);
@@ -134,7 +130,7 @@ void	check_map_char(t_map *map)
 		i++;
 	}
 }
-void	count_map_chars(t_map *map, t_elements *elements)
+void	count_map_chars(t_map *map)
 {
 	int	i;
 	int	j;
@@ -146,11 +142,11 @@ void	count_map_chars(t_map *map, t_elements *elements)
 		while (map->grid[i][j])
 		{
 			if (map->grid[i][j] == 'C')
-				elements->collectible++;
+				map->collectible++;
 			if (map->grid[i][j] == 'E')
-				elements->exit++;
+				map->exit++;
 			if (map->grid[i][j] == 'P')
-				elements->spawn++;
+				map->spawn++;
 			j++;
 		}
 		i++;
@@ -214,7 +210,6 @@ void	fill_matrix(t_map *map)
 		tmp = ft_strtrim(tmp, "\n");
 		free(line);
 		map->grid[i] = tmp;
-		// printf("%s\n", map->grid[i]);
 		i++;
 	}
 	map->grid[i] = NULL;
@@ -247,7 +242,24 @@ void	free_map(char **map)
 	return 0;
 } */
 
-bool	check_chars_counts(t_elements *elements)
+void	close_game(t_render *render)
+{
+	mlx_delete_image(render->mlx, render->collectible_img);
+	mlx_delete_image(render->mlx, render->player_img);
+	mlx_delete_image(render->mlx, render->exit_img);
+	mlx_delete_image(render->mlx, render->ground_img);
+	mlx_delete_image(render->mlx, render->wall_img);
+
+	mlx_delete_image(render->mlx, render->collectible_txt);
+	mlx_delete_image(render->mlx, render->player_txt);
+	mlx_delete_image(render->mlx, render->exit_txt);
+	mlx_delete_image(render->mlx, render->ground_txt);
+	mlx_delete_image(render->mlx, render->wall_txt);
+	free_map(render->map->grid);
+	mlx_close_window(render->mlx);
+}
+
+bool	check_chars_counts(t_map *elements)
 {
 	if (elements->collectible < 1)
 	{
