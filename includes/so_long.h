@@ -51,13 +51,13 @@ typedef struct s_render {
 	void	*wall_img;
 	void	*ground_img;
 	void	*player_img;
-	void	*collectible_img;
+	void	*collectible_img[8];
 	void	*exit_img;
 
 	void	*wall_txt;
 	void	*ground_txt;
 	void	*player_txt;
-	void	*collectible_txt[];
+	void	*collectible_txt[8];
 	void	*exit_txt;
 	t_player	*player;
 	t_map		*map;
@@ -91,7 +91,7 @@ void	close_game(t_render *render);
 void	init_game(t_global *game);
 void	collectible_handler(t_render *game);
 void	update_textures(t_render *game);
-
+void	loop_collectibles(void *param);
 
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 14:28:27 by albillie          #+#    #+#             */
-/*   Updated: 2024/12/02 05:40:45 by albillie         ###   ########.fr       */
+/*   Updated: 2024/12/02 06:19:31 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,30 @@ void	texture_loader(t_render *game)
 	game->wall_img = mlx_load_png("textures/wall.png");
 	game->ground_img = mlx_load_png("textures/ground.png");
 	game->player_img = mlx_load_png("textures/king.png");
-	game->collectible_img = mlx_load_png("textures/coin1.png");
+	game->collectible_img[0] = mlx_load_png("textures/coin1.png");
+	game->collectible_img[1] = mlx_load_png("textures/coin_2.png");
+	game->collectible_img[2] = mlx_load_png("textures/coin_3.png");
+	game->collectible_img[3] = mlx_load_png("textures/coin_4.png");
+	game->collectible_img[4] = mlx_load_png("textures/coin_5.png");
+	game->collectible_img[5] = mlx_load_png("textures/coin_6.png");
+	game->collectible_img[6] = mlx_load_png("textures/coin_7.png");
 	game->exit_img = mlx_load_png("textures/exit.png");
 
 	game->wall_txt = mlx_texture_to_image(game->mlx, game->wall_img);
 	game->ground_txt = mlx_texture_to_image(game->mlx, game->ground_img);
 	game->player_txt = mlx_texture_to_image(game->mlx, game->player_img);
-	game->collectible_txt = mlx_texture_to_image(game->mlx, game->collectible_img);
+	game->collectible_txt[0] = mlx_texture_to_image(game->mlx, game->collectible_img[0]);
+	game->collectible_txt[1] = mlx_texture_to_image(game->mlx, game->collectible_img[1]);
+	game->collectible_txt[2] = mlx_texture_to_image(game->mlx, game->collectible_img[2]);
+	game->collectible_txt[3] = mlx_texture_to_image(game->mlx, game->collectible_img[3]);
+	game->collectible_txt[4] = mlx_texture_to_image(game->mlx, game->collectible_img[4]);
+	game->collectible_txt[5] = mlx_texture_to_image(game->mlx, game->collectible_img[5]);
+	game->collectible_txt[6] = mlx_texture_to_image(game->mlx, game->collectible_img[6]);
 	game->exit_txt = mlx_texture_to_image(game->mlx, game->exit_img);
 
 
 	if (!game->wall_img || !game->ground_img || !game->player_img ||
-	!game->collectible_img || !game->exit_img)
+	!game->collectible_img[0] || !game->exit_img)
 	{
 		printf("Error when loading textures !\n");
 		exit(1);
@@ -49,7 +61,7 @@ void draw_map(t_render *game, char grid, int i, int j)
 	else if (grid == 'C')
 	{
 		DRAW(game->mlx, game->ground_txt, j * TS, i * TS);
-		DRAW(game->mlx, game->collectible_txt, j * TS, i * TS);
+		DRAW(game->mlx, game->collectible_txt[0], j * TS, i * TS);
 	}
 	else if (grid == 'E')
 	{
@@ -63,6 +75,22 @@ void draw_map(t_render *game, char grid, int i, int j)
 	}
 }
 
+void	loop_collectibles(void *param)
+{
+	t_render *game;
+
+	game = (t_render *) param;
+	while (true)
+	{
+		DRAW(game->mlx, game->collectible_txt[0], 0 * TS, 0 * TS);
+		DRAW(game->mlx, game->collectible_txt[1], 0 * TS, 0 * TS);
+		DRAW(game->mlx, game->collectible_txt[2], 0 * TS, 0 * TS);
+		DRAW(game->mlx, game->collectible_txt[3], 0 * TS, 0 * TS);
+		DRAW(game->mlx, game->collectible_txt[4], 0 * TS, 0 * TS);
+		DRAW(game->mlx, game->collectible_txt[5], 0 * TS, 0 * TS);
+		DRAW(game->mlx, game->collectible_txt[6], 0 * TS, 0 * TS);
+	}
+}
 void	map_drawer(t_map *map, t_render *game) // TODO inverser les axes X - Y pour l'affichage
 {
 	printf("im here\n");
@@ -111,8 +139,8 @@ int main(int argc, char **argv)
 	map_drawer(map, game);
 	player = (t_player *)malloc(sizeof(t_player));
 	get_player_pos(map, game, player);
-	ft_printf("%s", map->grid[1]);
 
+	// mlx_loop_hook(game->mlx, loop_collectibles, game); fait crash le pc
 	mlx_key_hook(game->mlx, change_direction, game);
 	mlx_loop(game->mlx);
 }

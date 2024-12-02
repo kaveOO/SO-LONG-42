@@ -6,7 +6,7 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:10:51 by albillie          #+#    #+#             */
-/*   Updated: 2024/12/02 04:47:40 by albillie         ###   ########.fr       */
+/*   Updated: 2024/12/02 05:46:44 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,13 +244,13 @@ void	free_map(char **map)
 
 void	close_game(t_render *render)
 {
-	mlx_delete_image(render->mlx, render->collectible_img);
+	mlx_delete_image(render->mlx, render->collectible_img[0]);
 	mlx_delete_image(render->mlx, render->player_img);
 	mlx_delete_image(render->mlx, render->exit_img);
 	mlx_delete_image(render->mlx, render->ground_img);
 	mlx_delete_image(render->mlx, render->wall_img);
 
-	mlx_delete_image(render->mlx, render->collectible_txt);
+	mlx_delete_image(render->mlx, render->collectible_txt[0]);
 	mlx_delete_image(render->mlx, render->player_txt);
 	mlx_delete_image(render->mlx, render->exit_txt);
 	mlx_delete_image(render->mlx, render->ground_txt);
