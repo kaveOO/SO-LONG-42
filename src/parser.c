@@ -6,13 +6,13 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:10:51 by albillie          #+#    #+#             */
-/*   Updated: 2024/12/02 20:24:53 by albillie         ###   ########.fr       */
+/*   Updated: 2024/12/03 20:16:06 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-void	args_checker(char *filename, int argc, t_map *map)
+char	*args_checker(int argc, char *filename)
 {
 	if (argc < 2)
 	{
@@ -34,46 +34,44 @@ void	args_checker(char *filename, int argc, t_map *map)
 		ft_printf("Error\nMap file extension is invalid !\n");
 		exit(1);
 	}
-	map->filename = filename;
+	return (filename);
 }
 
-void	get_height(t_map *map)
+int	get_height(char *filename)
 {
 	int		fd;
 	char	*line;
+	int		height;
 
-	fd = open(map->filename, O_RDONLY);
+	height = 0;
+	fd = open(filename, O_RDONLY);
 	line = get_next_line(fd);
 	while (line)
 	{
 		free(line);
 		line = get_next_line(fd);
-		map->height++;
+		height++;
 	}
 	free(line);
 	close(fd);
+	return(height);
 }
-void get_width(t_map *map)
+int get_width(char *filename)
 {
 	int		fd;
 	char	*line;
+	int		width;
 
-	fd = open(map->filename, O_RDONLY);
+	fd = open(filename, O_RDONLY);
 	line = get_next_line(fd);
-	printf("%s", line);
-	map->width = ft_strlen(line);
+	width = ft_strlen(line);
 	free(line);
 	get_next_line(-1);
 	close(fd);
+	return (width);
 }
 void	map_checker(t_map *map)
 {
-	map->collectible = 0;
-	map->exit = 0;
-	map->spawn = 0;
-
-	get_height(map);
-	get_width(map);
 	fill_matrix(map);
 	check_map_size(map);
 	check_map_closure(map);
@@ -81,8 +79,6 @@ void	map_checker(t_map *map)
 	count_map_chars(map);
 	if (!check_chars_counts(map))
 		free(map), exit_free("Invalid characters count !", map->grid);
-	map->w_height = map->height;
-	map->w_width = map->width - 1;
 }
 void	check_map_closure(t_map *map)
 {
@@ -220,24 +216,6 @@ void	free_map(char **map)
 	while(map && map[i])
 		free(map[i++]);
 	free(map);
-}
-
-void	close_game(t_render *render)
-{
-	mlx_delete_image(render->mlx, render->collectible_txt[0]);
-	mlx_delete_image(render->mlx, render->collectible_txt[1]);
-	mlx_delete_image(render->mlx, render->collectible_txt[2]);
-	mlx_delete_image(render->mlx, render->collectible_txt[3]);
-	mlx_delete_image(render->mlx, render->collectible_txt[4]);
-	mlx_delete_image(render->mlx, render->collectible_txt[5]);
-	mlx_delete_image(render->mlx, render->collectible_txt[6]);
-	mlx_delete_image(render->mlx, render->player_txt);
-	mlx_delete_image(render->mlx, render->exit_txt);
-	mlx_delete_image(render->mlx, render->ground_txt);
-	mlx_delete_image(render->mlx, render->wall_txt);
-	free_map(render->map->grid);
-	mlx_close_window(render->mlx);
-	mlx_terminate(render->mlx);
 }
 
 bool	check_chars_counts(t_map *elements)

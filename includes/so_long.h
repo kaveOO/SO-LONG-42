@@ -12,8 +12,9 @@
 
 # ifndef SO_LONG_H
 #define SO_LONG_H
+
 #define DRAW mlx_image_to_window
-#define TS 32
+#define SIZE 32
 
 #include "../minilibx/mlx42.h"
 #include "../libft/libft.h"
@@ -41,12 +42,12 @@ typedef struct s_map {
 	char	*filename;
 	int		height;
 	int		width;
-	int		w_height;
-	int		w_width;
 	int		collectible;
 	int		exit;
 	int		spawn;
 } t_map;
+
+// * RENDER STRUCTURE
 
 typedef struct s_render {
 	void	*mlx;
@@ -55,27 +56,25 @@ typedef struct s_render {
 	void	*wall_img;
 	void	*ground_img;
 	void	*player_img;
-	void	*collectible_img[8];
+	void	*collectible_img;
 	void	*exit_img;
 
 	void	*wall_txt;
 	void	*ground_txt;
 	void	*player_txt;
-	void	*collectible_txt[8];
+	void	*collectible_txt;
 	void	*exit_txt;
-	t_player	*player;
-	t_map		*map;
 } t_render;
 
 typedef struct s_global {
-	t_player	*player;
-	t_map		*map;
-	t_render	*render;
+	t_player	player;
+	t_map		map;
+	t_render	render;
 } t_global;
 
 // * GAME FUNCTIONS
 
-void	args_checker(char *filename, int argc, t_map *map);
+char	*args_checker(int argc, char *filename);
 char	*get_next_line(int fd);
 void	check_map_size(t_map *map);
 void	free_map(char **map);
@@ -85,19 +84,24 @@ void	count_map_chars(t_map *map);
 void	check_map_char(t_map *map);
 void	exit_free(char *str, char **map);
 bool	check_chars_counts(t_map *map);
-void	get_height(t_map *map);
-void	get_width(t_map *map);
+int		get_height(char *filename);
+int		get_width(char *filename);
 void	fill_matrix(t_map *map);
 void	hook(void *param);
-void	moove_handler(t_render *game, char key);
+void	move_handler(t_global *game, char key);
 void	change_direction(mlx_key_data_t keydata, void *param);
-void	get_player_pos(t_map *map, t_render *game, t_player *player);
-void	check_direction(t_render *game, char key);
-void	close_game(t_render *render);
+void	get_player_pos(t_global *game);
+void	check_direction(t_global *game, char key);
+void	close_game(t_global *game);
 void	init_game(t_global *game);
-void	collectible_handler(t_render *game);
-void	update_textures(t_render *game);
+void	collectible_handler(t_global *game);
+void	update_textures(t_global *game);
 void	loop_collectibles(void *param);
-
+void	map_drawer(t_global *game);
+void	texture_loader(t_render *render);
+void	update_mooves_count(t_global *game);
+void	update_player_pos(t_global *player);
+void	map_init(t_map *map, int ac, char *av);
+void	write_debug(char *msg);
 
 #endif
