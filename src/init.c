@@ -6,7 +6,7 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 17:20:38 by albillie          #+#    #+#             */
-/*   Updated: 2024/12/04 01:17:21 by albillie         ###   ########.fr       */
+/*   Updated: 2024/12/04 04:19:19 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,10 @@ void	texture_loader(t_global *game)
 
 	game->render.wall_txt = load_images(game, "textures/wall.png");
 	game->render.ground_txt = load_images(game, "textures/ground.png");
-	game->render.player_txt = load_images(game, "textures/king.png");
+	game->render.player_txt[0] = load_images(game, "textures/player1.png");
+	game->render.player_txt[1] = load_images(game, "textures/player2.png");
+	game->render.player_txt[2] = load_images(game, "textures/player3.png");
+	game->render.player_txt[3] = load_images(game, "textures/player4.png");
 	game->render.exit_txt = load_images(game, "textures/exit.png");
 
 	game->render.collectible_txt[0] = load_images(game, "textures/coin1.png");

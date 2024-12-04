@@ -55,7 +55,7 @@ typedef struct s_render {
 
 	void	*wall_txt;
 	void	*ground_txt;
-	void	*player_txt;
+	void	*player_txt[4];
 	void	*collectible_txt[8];
 	void	*exit_txt;
 } t_render;
@@ -98,5 +98,6 @@ void	update_mooves_count(t_global *game);
 void	update_player_pos(t_global *player);
 void	map_init(t_global *game, int ac, char *av);
 void	write_debug(char *msg);
+int	flood_fill(t_global *game, int y, int x);
 
 #endif

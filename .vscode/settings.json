@@ -18,7 +18,20 @@
 		"type_traits": "c",
 		"version": "c",
 		"ios": "c",
-		"ranges": "c"
+		"ranges": "c",
+		"*.tcc": "c",
+		"bitset": "c",
+		"istream": "c",
+		"memory": "c",
+		"streambuf": "c",
+		"tuple": "c",
+		"numeric": "c",
+		"mutex": "c",
+		"__split_buffer": "c",
+		"algorithm": "c",
+		"iterator": "c",
+		"vector": "c"
 	},
 	"cmake.ignoreCMakeListsMissing": true,
+	"vscord.app.name": "Visual Studio Code",
 }

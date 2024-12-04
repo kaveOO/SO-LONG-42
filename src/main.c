@@ -6,7 +6,7 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:09:31 by albillie          #+#    #+#             */
-/*   Updated: 2024/12/04 01:04:54 by albillie         ###   ########.fr       */
+/*   Updated: 2024/12/04 02:58:00 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int main(int argc, char **argv)
 	map_drawer(game);
 	get_player_pos(game);
 
-	// mlx_loop_hook(game->render.mlx, ,game,)
 	mlx_key_hook(game->render.mlx, change_direction, game);
 	mlx_close_hook(game->render.mlx, close_game, game);
 	mlx_loop(game->render.mlx);

@@ -6,7 +6,7 @@
 #    By: albillie <albillie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/12 21:25:18 by albillie          #+#    #+#              #
-#    Updated: 2024/12/03 21:27:30 by albillie         ###   ########.fr        #
+#    Updated: 2024/12/04 05:11:07 by albillie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRC 		=	src/parser.c	\
 				src/movements.c	\
 				src/loader.c	\
 				src/init.c		\
+				src/checker.c 	\
 
 OBJ 		= $(SRC:.c=.o)
 

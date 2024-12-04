@@ -6,7 +6,7 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:10:51 by albillie          #+#    #+#             */
-/*   Updated: 2024/12/04 00:41:01 by albillie         ###   ########.fr       */
+/*   Updated: 2024/12/04 08:16:54 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ void	map_checker(t_global *game)
 	game->map.height = get_height(game->map.filename);
 	game->map.width = get_width(game->map.filename);
 	fill_matrix(game);
+	get_player_pos(game);
+	ft_printf("%d\n", flood_fill(game, game->player.player_x, game->player.player_y));
 	check_map_size(game);
 	check_map_closure(game);
 	check_map_char(game);

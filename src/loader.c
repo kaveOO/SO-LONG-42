@@ -6,7 +6,7 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 19:17:48 by albillie          #+#    #+#             */
-/*   Updated: 2024/12/04 01:18:16 by albillie         ###   ########.fr       */
+/*   Updated: 2024/12/04 04:32:40 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	draw_map(t_render *game, char grid, int i, int j)
 	else if (grid == 'P')
 	{
 		DRAW(game->mlx, game->ground_txt, j * SIZE, i * SIZE);
-		DRAW(game->mlx, game->player_txt, j * SIZE, i * SIZE);
+		DRAW(game->mlx, game->player_txt[1], j * SIZE, i * SIZE);
 	}
 }
 
@@ -84,27 +84,10 @@ void	update_textures(t_global *game)
 {
 	if (game->map.grid[game->player.player_y][game->player.player_x] == 'E')
 	{
-		DRAW(game->render.mlx, game->render.player_txt, game->player.player_new_x * SIZE, game->player.player_new_y * SIZE);
+		DRAW(game->render.mlx, game->render.player_txt[0], game->player.player_new_x * SIZE, game->player.player_new_y * SIZE);
 		DRAW(game->render.mlx, game->render.exit_txt, game->player.player_x * SIZE, game->player.player_y * SIZE);
 	}
-	else
-	{
-		DRAW(game->render.mlx, game->render.player_txt, game->player.player_new_x * SIZE, game->player.player_new_y * SIZE);
-		DRAW(game->render.mlx, game->render.ground_txt, game->player.player_x * SIZE, game->player.player_y * SIZE);
-	}
-}
-
-void	collectible_handler(t_global *game)
-{
-	if (game->map.grid[game->player.player_new_y][game->player.player_new_x] == 'C')
-	{
-		game->map.grid[game->player.player_new_y][game->player.player_new_x] = '0';
-		game->map.collectible--;
-	}
-	if (game->map.grid[game->player.player_new_y][game->player.player_new_x] == 'E' && game->map.collectible == 0)
-	{
-		close_game(game);
-	}
+	DRAW(game->render.mlx, game->render.ground_txt, game->player.player_x * SIZE, game->player.player_y * SIZE);
 }
 
 void	close_game(void *param)
@@ -114,7 +97,7 @@ void	close_game(void *param)
 	game = (t_global *) param;
 	mlx_close_window(game->render.mlx);
 	mlx_delete_image(game->render.mlx, game->render.collectible_txt[0]);
-	mlx_delete_image(game->render.mlx, game->render.player_txt);
+	mlx_delete_image(game->render.mlx, game->render.player_txt[1]);
 	mlx_delete_image(game->render.mlx, game->render.exit_txt);
 	mlx_delete_image(game->render.mlx, game->render.ground_txt);
 	mlx_delete_image(game->render.mlx, game->render.wall_txt);
