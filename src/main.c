@@ -6,7 +6,7 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:09:31 by albillie          #+#    #+#             */
-/*   Updated: 2024/12/03 21:49:19 by albillie         ###   ########.fr       */
+/*   Updated: 2024/12/04 01:04:54 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,15 @@ int main(int argc, char **argv)
 {
 	t_global *game;
 	game = ft_calloc(1, sizeof(t_global));
-	map_init(&((*game).map), argc, argv[1]);
-	map_checker(&game->map);
-	printf("%d", game->map.width);
+	args_checker(game, argc, argv[1]);
+	map_checker(game);
 	game->render.mlx = mlx_init((game->map.width - 1) * SIZE, game->map.height * SIZE, "test", false);
-	texture_loader(&game->render);
+	texture_loader(game);
 	map_drawer(game);
 	get_player_pos(game);
 
+	// mlx_loop_hook(game->render.mlx, ,game,)
 	mlx_key_hook(game->render.mlx, change_direction, game);
+	mlx_close_hook(game->render.mlx, close_game, game);
 	mlx_loop(game->render.mlx);
-	mlx_terminate(game->render.mlx);
 }

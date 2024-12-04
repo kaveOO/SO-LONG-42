@@ -6,37 +6,42 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 17:20:38 by albillie          #+#    #+#             */
-/*   Updated: 2024/12/03 21:28:07 by albillie         ###   ########.fr       */
+/*   Updated: 2024/12/04 01:17:21 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-void	map_init(t_map *map, int ac, char *av)
+mlx_image_t	*load_images(t_global *game ,const char *path)
 {
-	map->filename = args_checker(ac, av);
-	map->height = get_height(map->filename);
-	map->width = get_width(map->filename);
+	mlx_texture_t	*image;
+	mlx_image_t	*texture;
+
+	image = mlx_load_png(path);
+	if (!image)
+	{
+		free_exit(game, "Failed to load textures", 1);
+	}
+	texture = mlx_texture_to_image(game->render.mlx, image);
+	mlx_delete_texture(image);
+	return (texture);
 }
 
-void	texture_loader(t_render *render)
+void	texture_loader(t_global *game)
 {
-	render->wall_img = mlx_load_png("textures/wall.png");
-	render->ground_img = mlx_load_png("textures/ground.png");
-	render->player_img = mlx_load_png("textures/king.png");
-	render->collectible_img = mlx_load_png("textures/coin1.png");
-	render->exit_img = mlx_load_png("textures/exit.png");
 
-	render->wall_txt = mlx_texture_to_image(render->mlx, render->wall_img);
-	render->ground_txt = mlx_texture_to_image(render->mlx, render->ground_img);
-	render->player_txt = mlx_texture_to_image(render->mlx, render->player_img);
-	render->collectible_txt = mlx_texture_to_image(render->mlx, render->collectible_img);
-	render->exit_txt = mlx_texture_to_image(render->mlx, render->exit_img);
+	game->render.wall_txt = load_images(game, "textures/wall.png");
+	game->render.ground_txt = load_images(game, "textures/ground.png");
+	game->render.player_txt = load_images(game, "textures/king.png");
+	game->render.exit_txt = load_images(game, "textures/exit.png");
 
-	mlx_delete_texture(render->wall_img);
-	mlx_delete_texture(render->ground_img);
-	mlx_delete_texture(render->player_img);
-	mlx_delete_texture(render->exit_img);
-	mlx_delete_texture(render->collectible_img);
+	game->render.collectible_txt[0] = load_images(game, "textures/coin1.png");
+	game->render.collectible_txt[1] = load_images(game, "textures/coin2.png");
+	game->render.collectible_txt[2] = load_images(game, "textures/coin3.png");
+	game->render.collectible_txt[3] = load_images(game, "textures/coin4.png");
+	game->render.collectible_txt[4] = load_images(game, "textures/coin5.png");
+	game->render.collectible_txt[5] = load_images(game, "textures/coin6.png");
+	game->render.collectible_txt[6] = load_images(game, "textures/coin7.png");
+	game->render.collectible_txt[7] = load_images(game, "textures/coin8.png");
 }
 

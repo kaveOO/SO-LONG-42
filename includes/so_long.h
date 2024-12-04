@@ -53,18 +53,14 @@ typedef struct s_render {
 	void	*mlx;
 	void	*window;
 
-	void	*wall_img;
-	void	*ground_img;
-	void	*player_img;
-	void	*collectible_img;
-	void	*exit_img;
-
 	void	*wall_txt;
 	void	*ground_txt;
 	void	*player_txt;
-	void	*collectible_txt;
+	void	*collectible_txt[8];
 	void	*exit_txt;
 } t_render;
+
+// * GLOBAL STRUCTURE
 
 typedef struct s_global {
 	t_player	player;
@@ -74,34 +70,33 @@ typedef struct s_global {
 
 // * GAME FUNCTIONS
 
-char	*args_checker(int argc, char *filename);
+void	args_checker(t_global *game, int argc, char *filename);
 char	*get_next_line(int fd);
-void	check_map_size(t_map *map);
-void	free_map(char **map);
-void	map_checker(t_map *map);
-void	check_map_closure(t_map *map);
-void	count_map_chars(t_map *map);
-void	check_map_char(t_map *map);
-void	exit_free(char *str, char **map);
-bool	check_chars_counts(t_map *map);
+void	check_map_size(t_global *game);
+void	free_exit(t_global *game, char *msg, int status);
+void	map_checker(t_global *game);
+void	check_map_closure(t_global *game);
+void	count_map_chars(t_global *game);
+void	check_map_char(t_global *game);
+bool	check_chars_counts(t_global *game);
 int		get_height(char *filename);
 int		get_width(char *filename);
-void	fill_matrix(t_map *map);
+void	fill_matrix(t_global *game);
 void	hook(void *param);
 void	move_handler(t_global *game, char key);
 void	change_direction(mlx_key_data_t keydata, void *param);
 void	get_player_pos(t_global *game);
 void	check_direction(t_global *game, char key);
-void	close_game(t_global *game);
+void	close_game(void *param);
 void	init_game(t_global *game);
 void	collectible_handler(t_global *game);
 void	update_textures(t_global *game);
 void	loop_collectibles(void *param);
 void	map_drawer(t_global *game);
-void	texture_loader(t_render *render);
+void	texture_loader(t_global *game);
 void	update_mooves_count(t_global *game);
 void	update_player_pos(t_global *player);
-void	map_init(t_map *map, int ac, char *av);
+void	map_init(t_global *game, int ac, char *av);
 void	write_debug(char *msg);
 
 #endif
