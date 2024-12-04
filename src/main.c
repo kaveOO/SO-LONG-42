@@ -6,17 +6,25 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:09:31 by albillie          #+#    #+#             */
-/*   Updated: 2024/12/04 02:58:00 by albillie         ###   ########.fr       */
+/*   Updated: 2024/12/04 23:30:57 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/so_long.h"
+#include "so_long.h"
 
-void	write_debug(char *msg)
+void	close_game(void *param)
 {
-	write(2, "[DEBUG]", 7);
-	write(2, msg, ft_strlen(msg));
-	write(2, "\n", 1);
+	t_global *game;
+
+	game = (t_global *) param;
+	mlx_close_window(game->render.mlx);
+	mlx_delete_image(game->render.mlx, game->render.collectible_txt[0]);
+	mlx_delete_image(game->render.mlx, game->render.player_txt[1]);
+	mlx_delete_image(game->render.mlx, game->render.exit_txt);
+	mlx_delete_image(game->render.mlx, game->render.ground_txt);
+	mlx_delete_image(game->render.mlx, game->render.wall_txt);
+	mlx_terminate(game->render.mlx);
+	free_exit(game, "Thanks you for playing, have a good day !", 0);
 }
 
 int main(int argc, char **argv)

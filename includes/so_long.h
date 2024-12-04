@@ -90,14 +90,15 @@ void	check_direction(t_global *game, char key);
 void	close_game(void *param);
 void	init_game(t_global *game);
 void	collectible_handler(t_global *game);
-void	update_textures(t_global *game);
-void	loop_collectibles(void *param);
 void	map_drawer(t_global *game);
 void	texture_loader(t_global *game);
-void	update_mooves_count(t_global *game);
-void	update_player_pos(t_global *player);
+void	draw_mooves(t_global *game);
+void	update_position(t_global *game);
 void	map_init(t_global *game, int ac, char *av);
 void	write_debug(char *msg);
-int	flood_fill(t_global *game, int y, int x);
+void	flood_fill(char **map, int y, int x);
+void	draw_map(t_render *game, char grid, int i, int j);
+void	update_player_txt(t_global *game, char key);
+void	copy_map(t_global *game);
 
 #endif

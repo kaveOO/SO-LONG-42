@@ -34,4 +34,5 @@
 	},
 	"cmake.ignoreCMakeListsMissing": true,
 	"vscord.app.name": "Visual Studio Code",
+	"C_Cpp.errorSquiggles": "enabled",
 }

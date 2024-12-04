@@ -6,7 +6,7 @@
 #    By: albillie <albillie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/12 21:25:18 by albillie          #+#    #+#              #
-#    Updated: 2024/12/04 05:11:07 by albillie         ###   ########.fr        #
+#    Updated: 2024/12/04 23:05:51 by albillie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME 		= so_long
 CC 			= cc
 RM			= rm -f
 
-CFLAGS 		+= -Wall -Wextra -Werror -O3 -g
+CFLAGS 		+= -I includes -Wall -Wextra -Werror -O3 -g
 CLINKS		= -ldl -lglfw -pthread -lm
 
 MLX			= minilibx
@@ -23,12 +23,15 @@ LIBMLX 		= $(MLX)/build/libmlx42.a
 
 LIB			= libft/libft.a
 
-SRC 		=	src/parser.c	\
-				src/main.c		\
-				src/movements.c	\
-				src/loader.c	\
-				src/init.c		\
-				src/checker.c 	\
+SRC 		=	src/args/parser.c			\
+				src/map/map.c				\
+				src/map/parser.c			\
+				src/player/hooks.c			\
+				src/player/player.c			\
+				src/render/loader.c			\
+				src/render/render.c			\
+				src/utils/utils.c			\
+				src/main.c					\
 
 OBJ 		= $(SRC:.c=.o)
 

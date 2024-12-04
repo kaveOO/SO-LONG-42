@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   loader.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/03 17:20:38 by albillie          #+#    #+#             */
-/*   Updated: 2024/12/04 04:19:19 by albillie         ###   ########.fr       */
+/*   Created: 2024/12/04 22:00:17 by albillie          #+#    #+#             */
+/*   Updated: 2024/12/04 23:07:03 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/so_long.h"
+#include "so_long.h"
 
-mlx_image_t	*load_images(t_global *game ,const char *path)
+mlx_image_t	*load_images(t_global *game, const char *path)
 {
 	mlx_texture_t	*image;
 	mlx_image_t	*texture;
@@ -29,15 +29,13 @@ mlx_image_t	*load_images(t_global *game ,const char *path)
 
 void	texture_loader(t_global *game)
 {
-
 	game->render.wall_txt = load_images(game, "textures/wall.png");
 	game->render.ground_txt = load_images(game, "textures/ground.png");
+	game->render.exit_txt = load_images(game, "textures/exit.png");
 	game->render.player_txt[0] = load_images(game, "textures/player1.png");
 	game->render.player_txt[1] = load_images(game, "textures/player2.png");
 	game->render.player_txt[2] = load_images(game, "textures/player3.png");
 	game->render.player_txt[3] = load_images(game, "textures/player4.png");
-	game->render.exit_txt = load_images(game, "textures/exit.png");
-
 	game->render.collectible_txt[0] = load_images(game, "textures/coin1.png");
 	game->render.collectible_txt[1] = load_images(game, "textures/coin2.png");
 	game->render.collectible_txt[2] = load_images(game, "textures/coin3.png");
@@ -47,4 +45,3 @@ void	texture_loader(t_global *game)
 	game->render.collectible_txt[6] = load_images(game, "textures/coin7.png");
 	game->render.collectible_txt[7] = load_images(game, "textures/coin8.png");
 }
-
