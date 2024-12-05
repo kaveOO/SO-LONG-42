@@ -6,7 +6,7 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 22:00:17 by albillie          #+#    #+#             */
-/*   Updated: 2024/12/05 02:04:08 by albillie         ###   ########.fr       */
+/*   Updated: 2024/12/05 03:59:42 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 mlx_image_t	*load_images(t_global *game, const char *path)
 {
 	mlx_texture_t	*image;
-	mlx_image_t	*texture;
+	mlx_image_t		*texture;
 
 	image = mlx_load_png(path);
 	if (!image)

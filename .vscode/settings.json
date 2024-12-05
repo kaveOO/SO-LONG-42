@@ -30,7 +30,9 @@
 		"__split_buffer": "c",
 		"algorithm": "c",
 		"iterator": "c",
-		"vector": "c"
+		"vector": "c",
+		"libft.h": "c",
+		"unistd.h": "c"
 	},
 	"cmake.ignoreCMakeListsMissing": true,
 	"vscord.app.name": "Visual Studio Code",

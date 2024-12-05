@@ -6,13 +6,11 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 21:51:15 by albillie          #+#    #+#             */
-/*   Updated: 2024/12/05 02:23:50 by albillie         ###   ########.fr       */
+/*   Updated: 2024/12/05 04:04:14 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-static int	i;
 
 void	draw_mooves(t_global *game)
 {
@@ -48,41 +46,47 @@ void	draw_map(t_render *game, char grid, int i, int j)
 		DRAW(game->mlx, game->ground_txt, j * SIZE, i * SIZE);
 		DRAW(game->mlx, game->gnome_txt, j * SIZE, i * SIZE);
 	}
-
 }
 
 void	exit_keeper(t_global *game)
 {
 	if (game->map.grid[game->player.player_y][game->player.player_x] == 'E')
 	{
-		DRAW(game->render.mlx, game->render.exit_txt, game->player.player_x * SIZE, game->player.player_y * SIZE);
+		DRAW(game->render.mlx, game->render.exit_txt,
+			game->player.player_x * SIZE, game->player.player_y * SIZE);
 	}
 	else
 	{
-		DRAW(game->render.mlx, game->render.ground_txt, game->player.player_x * SIZE, game->player.player_y * SIZE);
+		DRAW(game->render.mlx, game->render.ground_txt,
+			game->player.player_x * SIZE, game->player.player_y * SIZE);
 	}
 }
+
 void	update_player_txt(t_global *game, char key)
 {
 	if (key == 'W')
 	{
-		i = 1;
-		DRAW(game->render.mlx, game->render.player_txt[1], game->player.player_new_x * SIZE, game->player.player_new_y * SIZE);
+		game->render.angle = 1;
+		DRAW(game->render.mlx, game->render.player_txt[1],
+			game->player.player_new_x * SIZE, game->player.player_new_y * SIZE);
 	}
 	else if (key == 'S')
 	{
-		i = 0;
-		DRAW(game->render.mlx, game->render.player_txt[0], game->player.player_new_x * SIZE, game->player.player_new_y * SIZE);
+		game->render.angle = 0;
+		DRAW(game->render.mlx, game->render.player_txt[0],
+			game->player.player_new_x * SIZE, game->player.player_new_y * SIZE);
 	}
 	else if (key == 'A')
 	{
-		i = 2;
-		DRAW(game->render.mlx, game->render.player_txt[2], game->player.player_new_x * SIZE, game->player.player_new_y * SIZE);
+		game->render.angle = 2;
+		DRAW(game->render.mlx, game->render.player_txt[2],
+			game->player.player_new_x * SIZE, game->player.player_new_y * SIZE);
 	}
 	else if (key == 'D')
 	{
-		i = 3;
-		DRAW(game->render.mlx, game->render.player_txt[3], game->player.player_new_x * SIZE, game->player.player_new_y * SIZE);
+		game->render.angle = 3;
+		DRAW(game->render.mlx, game->render.player_txt[3],
+			game->player.player_new_x * SIZE, game->player.player_new_y * SIZE);
 	}
 	exit_keeper(game);
 }
@@ -93,8 +97,8 @@ void	collectible_handler(t_global *game)
 		== 'C')
 	{
 		DRAW(game->render.mlx, game->render.ground_txt,
-		 	game->player.player_new_x * SIZE, game->player.player_new_y * SIZE);
-		DRAW(game->render.mlx, game->render.player_txt[i],
+			game->player.player_new_x * SIZE, game->player.player_new_y * SIZE);
+		DRAW(game->render.mlx, game->render.player_txt[game->render.angle],
 			game->player.player_new_x * SIZE, game->player.player_new_y * SIZE);
 		game->map.grid[game->player.player_new_y][game->player.player_new_x]
 			= '0';

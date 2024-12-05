@@ -6,7 +6,7 @@
 #    By: albillie <albillie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/12 21:25:18 by albillie          #+#    #+#              #
-#    Updated: 2024/12/04 23:05:51 by albillie         ###   ########.fr        #
+#    Updated: 2024/12/05 03:43:24 by albillie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ LIB			= libft/libft.a
 SRC 		=	src/args/parser.c			\
 				src/map/map.c				\
 				src/map/parser.c			\
+				src/map/parser1.c			\
 				src/player/hooks.c			\
 				src/player/player.c			\
 				src/render/loader.c			\

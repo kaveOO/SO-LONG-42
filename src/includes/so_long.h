@@ -1,4 +1,4 @@
-;/* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
@@ -6,38 +6,40 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 14:12:36 by albillie          #+#    #+#             */
-/*   Updated: 2024/11/01 22:29:45 by albillie         ###   ########.fr       */
+/*   Updated: 2024/12/05 04:08:01 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef SO_LONG_H
-#define SO_LONG_H
+#ifndef SO_LONG_H
+# define SO_LONG_H
 
-#define DRAW mlx_image_to_window
-#define SIZE 32
+# define DRAW mlx_image_to_window
+# define SIZE 32
 
-#include "../minilibx/mlx42.h"
-#include "../libft/libft.h"
-#include <stdlib.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <errno.h>
-#include <string.h>
+# include "../minilibx/mlx42.h"
+# include "../libft/libft.h"
+# include <stdlib.h>
+# include <fcntl.h>
+# include <unistd.h>
+# include <stdio.h>
+# include <errno.h>
+# include <string.h>
 
 // * GAME STRUCTURE
 
-typedef struct s_player {
+typedef struct s_player
+{
 	int	player_x;
 	int	player_y;
-	int player_new_x;
-	int player_new_y;
+	int	player_new_x;
+	int	player_new_y;
 	int	player_m;
-} t_player;
+}	t_player;
 
 // * MAP STRUCTURE
 
-typedef struct s_map {
+typedef struct s_map
+{
 	char	**grid;
 	char	*filename;
 	int		height;
@@ -45,11 +47,12 @@ typedef struct s_map {
 	int		collectible;
 	int		exit;
 	int		spawn;
-} t_map;
+}	t_map;
 
 // * RENDER STRUCTURE
 
-typedef struct s_render {
+typedef struct s_render
+{
 	void	*mlx;
 	void	*window;
 
@@ -59,15 +62,17 @@ typedef struct s_render {
 	void	*gnome_txt;
 	void	*collectible_txt;
 	void	*exit_txt;
-} t_render;
+	int		angle;
+}	t_render;
 
 // * GLOBAL STRUCTURE
 
-typedef struct s_global {
+typedef struct s_global
+{
 	t_player	player;
 	t_map		map;
 	t_render	render;
-} t_global;
+}	t_global;
 
 // * GAME FUNCTIONS
 
@@ -83,19 +88,16 @@ bool	check_chars_counts(t_global *game);
 int		get_height(char *filename);
 int		get_width(char *filename);
 void	fill_matrix(t_global *game);
-void	hook(void *param);
 void	move_handler(t_global *game, char key);
 void	change_direction(mlx_key_data_t keydata, void *param);
 void	get_player_pos(t_global *game);
 void	check_direction(t_global *game, char key);
 void	close_game(void *param);
-void	init_game(t_global *game);
 void	collectible_handler(t_global *game);
 void	map_drawer(t_global *game);
 void	texture_loader(t_global *game);
 void	draw_mooves(t_global *game);
 void	update_position(t_global *game);
-void	map_init(t_global *game, int ac, char *av);
 void	write_debug(char *msg);
 void	flood_fill(char **map, int y, int x);
 void	draw_map(t_render *game, char grid, int i, int j);

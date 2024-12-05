@@ -6,7 +6,7 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:10:51 by albillie          #+#    #+#             */
-/*   Updated: 2024/12/05 02:13:46 by albillie         ###   ########.fr       */
+/*   Updated: 2024/12/05 03:53:07 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	check_map_closure(t_global *game)
 	{
 		if (game->map.grid[0][i] != '1' ||
 			game->map.grid[game->map.height - 1][i] != '1')
-			free_exit(game, "Invalid characters on first or/and last line !", 1);
+			free_exit(game, "Invalid character on first or/and last line !", 1);
 		while (j > 0)
 		{
 			if (game->map.grid[j][game->map.width - 4] != '1' ||
@@ -57,6 +57,7 @@ void	check_map_closure(t_global *game)
 		i++;
 	}
 }
+
 void	check_map_char(t_global *game)
 {
 	size_t	i;
@@ -79,6 +80,7 @@ void	check_map_char(t_global *game)
 		i++;
 	}
 }
+
 void	count_map_chars(t_global *game)
 {
 	int	i;
@@ -106,15 +108,15 @@ bool	check_chars_counts(t_global *game)
 {
 	if (game->map.collectible < 1)
 	{
-		return false;
+		return (false);
 	}
 	if (game->map.exit < 1 || game->map.exit > 1)
 	{
-		return false;
+		return (false);
 	}
 	if (game->map.spawn < 1 || game->map.spawn > 1)
 	{
-		return false;
+		return (false);
 	}
-	return true;
+	return (true);
 }

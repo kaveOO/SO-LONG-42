@@ -6,7 +6,7 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 22:07:42 by albillie          #+#    #+#             */
-/*   Updated: 2024/12/04 23:31:41 by albillie         ###   ########.fr       */
+/*   Updated: 2024/12/05 04:02:27 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	change_direction(mlx_key_data_t keydata, void *param)
 {
-	t_global *game;
+	t_global	*game;
 
 	game = (t_global *) param;
 	if (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT)
@@ -83,6 +83,3 @@ void	move_handler(t_global *game, char key)
 	draw_mooves(game);
 	collectible_handler(game);
 }
-
-
-
