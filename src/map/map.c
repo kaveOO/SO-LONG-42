@@ -6,7 +6,7 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 21:38:28 by albillie          #+#    #+#             */
-/*   Updated: 2024/12/04 23:40:12 by albillie         ###   ########.fr       */
+/*   Updated: 2024/12/05 02:26:53 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,13 @@ void	map_checker(t_global *game)
 	game->map.width = get_width(game->map.filename);
 	fill_matrix(game);
 	get_player_pos(game);
-
-	copy_map(game);
-
 	check_map_size(game);
 	check_map_closure(game);
 	check_map_char(game);
 	count_map_chars(game);
 	if (!check_chars_counts(game))
 		free_exit(game, "Invalid count of characters on the map !", 1);
+	check_map(game);
 }
 
 void	fill_matrix(t_global *game)

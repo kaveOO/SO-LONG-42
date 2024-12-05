@@ -6,7 +6,7 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:09:31 by albillie          #+#    #+#             */
-/*   Updated: 2024/12/04 23:30:57 by albillie         ###   ########.fr       */
+/*   Updated: 2024/12/05 02:04:33 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	close_game(void *param)
 
 	game = (t_global *) param;
 	mlx_close_window(game->render.mlx);
-	mlx_delete_image(game->render.mlx, game->render.collectible_txt[0]);
+	mlx_delete_image(game->render.mlx, game->render.collectible_txt);
 	mlx_delete_image(game->render.mlx, game->render.player_txt[1]);
 	mlx_delete_image(game->render.mlx, game->render.exit_txt);
 	mlx_delete_image(game->render.mlx, game->render.ground_txt);

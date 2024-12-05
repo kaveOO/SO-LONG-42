@@ -6,7 +6,7 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 22:00:17 by albillie          #+#    #+#             */
-/*   Updated: 2024/12/04 23:07:03 by albillie         ###   ########.fr       */
+/*   Updated: 2024/12/05 02:04:08 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,10 @@ void	texture_loader(t_global *game)
 	game->render.wall_txt = load_images(game, "textures/wall.png");
 	game->render.ground_txt = load_images(game, "textures/ground.png");
 	game->render.exit_txt = load_images(game, "textures/exit.png");
+	game->render.collectible_txt = load_images(game, "textures/coin.png");
+	game->render.gnome_txt = load_images(game, "textures/gnome.png");
 	game->render.player_txt[0] = load_images(game, "textures/player1.png");
 	game->render.player_txt[1] = load_images(game, "textures/player2.png");
 	game->render.player_txt[2] = load_images(game, "textures/player3.png");
 	game->render.player_txt[3] = load_images(game, "textures/player4.png");
-	game->render.collectible_txt[0] = load_images(game, "textures/coin1.png");
-	game->render.collectible_txt[1] = load_images(game, "textures/coin2.png");
-	game->render.collectible_txt[2] = load_images(game, "textures/coin3.png");
-	game->render.collectible_txt[3] = load_images(game, "textures/coin4.png");
-	game->render.collectible_txt[4] = load_images(game, "textures/coin5.png");
-	game->render.collectible_txt[5] = load_images(game, "textures/coin6.png");
-	game->render.collectible_txt[6] = load_images(game, "textures/coin7.png");
-	game->render.collectible_txt[7] = load_images(game, "textures/coin8.png");
 }

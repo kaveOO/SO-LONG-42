@@ -6,7 +6,7 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:10:51 by albillie          #+#    #+#             */
-/*   Updated: 2024/12/04 23:07:03 by albillie         ###   ########.fr       */
+/*   Updated: 2024/12/05 02:13:46 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	check_map_char(t_global *game)
 	char	*chars;
 
 	i = 0;
-	chars = "01CEP";
+	chars = "01CEPG";
 	while (game->map.grid[i])
 	{
 		j = 0;

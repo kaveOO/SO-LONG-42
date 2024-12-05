@@ -56,7 +56,8 @@ typedef struct s_render {
 	void	*wall_txt;
 	void	*ground_txt;
 	void	*player_txt[4];
-	void	*collectible_txt[8];
+	void	*gnome_txt;
+	void	*collectible_txt;
 	void	*exit_txt;
 } t_render;
 
@@ -99,6 +100,9 @@ void	write_debug(char *msg);
 void	flood_fill(char **map, int y, int x);
 void	draw_map(t_render *game, char grid, int i, int j);
 void	update_player_txt(t_global *game, char key);
-void	copy_map(t_global *game);
+char	**copy_map(t_global *game);
+bool	verify_path(char **map);
+void	check_map(t_global *game);
+void	free_map(char **map);
 
 #endif

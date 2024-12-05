@@ -6,7 +6,7 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 21:46:59 by albillie          #+#    #+#             */
-/*   Updated: 2024/12/04 23:41:52 by albillie         ###   ########.fr       */
+/*   Updated: 2024/12/05 02:31:37 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,18 @@ void	free_exit(t_global *game, char *msg, int status)
 	free(game->map.grid);
 	free(game);
 	exit(1);
+}
+
+void	free_map(char **map)
+{
+	int	i;
+
+	i = 0;
+	while(map && map[i])
+	{
+		free(map[i++]);
+	}
+	free(map);
 }
 
 int	get_height(char *filename)
@@ -75,42 +87,56 @@ int get_width(char *filename)
 	return (width);
 }
 
+void	check_map(t_global *game)
+{
+	char	**map;
+
+	map = copy_map(game);
+	if (!map)
+	{
+		free_exit(game, "Error when copying the map !", 1);
+	}
+	flood_fill(map, game->player.player_y, game->player.player_x);
+	if (!verify_path(map))
+	{
+		free_map(map);
+		free_exit(game, "Invalid map path !", 1);
+	}
+	free_map(map);
+}
+
 void	flood_fill(char **map, int y, int x)
 {
-	if (map[y][x] == '1' || map[y][x] == 'V' )
-		return;
+	if (map[y][x] == '1'|| map[y][x] == 'G' || map[y][x] == 'V'  )
+		return ;
 	map[y][x] = 'V';
+
 	flood_fill(map, y - 1, x);
 	flood_fill(map, y + 1, x);
-	flood_fill(map, x, x - 1);
-	flood_fill(map, x, x + 1);
+	flood_fill(map, y, x - 1);
+	flood_fill(map, y, x + 1);
 }
 
-void	copy_map(t_global *game)
+char	**copy_map(t_global *game)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		y;
 	char	**map_copy;
 
-	map_copy = malloc(sizeof(game->map.grid));
+	y = get_height(game->map.filename);
+	map_copy = (char **)malloc(sizeof(char *) * (y + 1));
 	i = 0;
-	while (game->map.grid[i])
+	ft_memset(map_copy, 0, sizeof(char *) * (y + 1));
+	while (i < y)
 	{
-		j = 0;
-		while (game->map.grid[i][j])
-		{
-			map_copy[i][j] = game->map.grid[i][j];
-			j++;
-		}
+		map_copy[i] = ft_strdup(game->map.grid[i]);
 		i++;
 	}
-	printf("%s", map_copy[0]);
+	map_copy[i] = NULL;
+	return (map_copy);
 }
 
-
-
-
-void	verify_path(char **map)
+bool	verify_path(char **map)
 {
 	int	i;
 	int	j;
@@ -121,12 +147,13 @@ void	verify_path(char **map)
 		j = 0;
 		while (map[i][j])
 		{
-			if (map[i][j] == 'C' || map[i][j] == 'V')
+			if (map[i][j] == 'C' || map[i][j] == 'E')
 			{
-				ft_printf("this is invalid map path\n");
+				return false;
 			}
 			j++;
 		}
 		i++;
 	}
+	return true;
 }

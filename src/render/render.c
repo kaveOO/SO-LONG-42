@@ -6,7 +6,7 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 21:51:15 by albillie          #+#    #+#             */
-/*   Updated: 2024/12/04 23:07:03 by albillie         ###   ########.fr       */
+/*   Updated: 2024/12/05 02:23:50 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,13 @@ void	draw_mooves(t_global *game)
 void	draw_map(t_render *game, char grid, int i, int j)
 {
 	if (grid == '0')
-	{
 		DRAW(game->mlx, game->ground_txt, j * SIZE, i * SIZE);
-	}
 	else if (grid == '1')
-	{
 		DRAW(game->mlx, game->wall_txt, j * SIZE, i * SIZE);
-	}
 	else if (grid == 'C')
 	{
 		DRAW(game->mlx, game->ground_txt, j * SIZE, i * SIZE);
-		DRAW(game->mlx, game->collectible_txt[0], j * SIZE, i * SIZE);
+		DRAW(game->mlx, game->collectible_txt, j * SIZE, i * SIZE);
 	}
 	else if (grid == 'E')
 	{
@@ -47,13 +43,18 @@ void	draw_map(t_render *game, char grid, int i, int j)
 		DRAW(game->mlx, game->ground_txt, j * SIZE, i * SIZE);
 		DRAW(game->mlx, game->player_txt[0], j * SIZE, i * SIZE);
 	}
+	else if (grid == 'G')
+	{
+		DRAW(game->mlx, game->ground_txt, j * SIZE, i * SIZE);
+		DRAW(game->mlx, game->gnome_txt, j * SIZE, i * SIZE);
+	}
+
 }
 
 void	exit_keeper(t_global *game)
 {
 	if (game->map.grid[game->player.player_y][game->player.player_x] == 'E')
 	{
-		ft_printf("i'm on the exit !");
 		DRAW(game->render.mlx, game->render.exit_txt, game->player.player_x * SIZE, game->player.player_y * SIZE);
 	}
 	else
@@ -86,7 +87,6 @@ void	update_player_txt(t_global *game, char key)
 	exit_keeper(game);
 }
 
-
 void	collectible_handler(t_global *game)
 {
 	if (game->map.grid[game->player.player_new_y][game->player.player_new_x]
@@ -102,6 +102,11 @@ void	collectible_handler(t_global *game)
 	}
 	if (game->map.grid[game->player.player_new_y][game->player.player_new_x]
 		== 'E' && game->map.collectible == 0)
+	{
+		close_game(game);
+	}
+	if (game->map.grid[game->player.player_new_y][game->player.player_new_x]
+		== 'G')
 	{
 		close_game(game);
 	}
