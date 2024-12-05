@@ -6,7 +6,7 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 03:00:15 by albillie          #+#    #+#             */
-/*   Updated: 2024/12/05 03:53:57 by albillie         ###   ########.fr       */
+/*   Updated: 2024/12/05 12:35:06 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	**copy_map(t_global *game)
 	int		y;
 	char	**map_copy;
 
-	y = get_height(game->map.filename);
+	y = game->map.height;
 	map_copy = (char **)malloc(sizeof(char *) * (y + 1));
 	i = 0;
 	ft_memset(map_copy, 0, sizeof(char *) * (y + 1));

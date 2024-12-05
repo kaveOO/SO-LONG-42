@@ -66,7 +66,7 @@ all: $(NAME)
 clean:
 	$(RM) $(OBJ)
 	$(MAKE) clean -C $(MLX)
-#	$(MAKE) clean -C $(LIB)
+	$(MAKE) clean -C $(LIB)
 
 
 fclean: clean

@@ -6,7 +6,7 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 21:46:59 by albillie          #+#    #+#             */
-/*   Updated: 2024/12/05 04:01:20 by albillie         ###   ########.fr       */
+/*   Updated: 2024/12/05 12:45:18 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,37 +53,40 @@ void	free_map(char **map)
 	free(map);
 }
 
-int	get_height(char *filename)
+void	get_height(t_global *game)
 {
 	int		fd;
 	char	*line;
-	int		height;
 
-	height = 0;
-	fd = open(filename, O_RDONLY);
+	fd = open(game->map.filename, O_RDONLY);
 	line = get_next_line(fd);
+	if (!line)
+	{
+		free_exit(game, "Map is empty !", 1);
+	}
 	while (line)
 	{
 		free(line);
 		line = get_next_line(fd);
-		height++;
+		game->map.height++;
 	}
 	free(line);
 	close(fd);
-	return (height);
 }
 
-int	get_width(char *filename)
+void	get_width(t_global *game)
 {
 	int		fd;
 	char	*line;
-	int		width;
 
-	fd = open(filename, O_RDONLY);
+	fd = open(game->map.filename, O_RDONLY);
 	line = get_next_line(fd);
-	width = ft_strlen(line);
+	if (!line)
+	{
+		free_exit(game, "Map is empty !", 1);
+	}
+	game->map.width = ft_strlen(line);
 	free(line);
 	get_next_line(-1);
 	close(fd);
-	return (width);
 }

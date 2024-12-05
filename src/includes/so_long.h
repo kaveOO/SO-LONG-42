@@ -6,7 +6,7 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 14:12:36 by albillie          #+#    #+#             */
-/*   Updated: 2024/12/05 06:44:45 by albillie         ###   ########.fr       */
+/*   Updated: 2024/12/05 12:29:56 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ void	check_map_closure(t_global *game);
 void	count_map_chars(t_global *game);
 void	check_map_char(t_global *game);
 bool	check_chars_counts(t_global *game);
-int		get_height(char *filename);
-int		get_width(char *filename);
+void	get_height(t_global *game);
+void	get_width(t_global *game);
 void	fill_matrix(t_global *game);
 void	move_handler(t_global *game, char key);
 void	change_direction(mlx_key_data_t keydata, void *param);

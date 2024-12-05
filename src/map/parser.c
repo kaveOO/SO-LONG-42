@@ -6,7 +6,7 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:10:51 by albillie          #+#    #+#             */
-/*   Updated: 2024/12/05 03:53:07 by albillie         ###   ########.fr       */
+/*   Updated: 2024/12/05 13:28:13 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,20 +39,20 @@ void	check_map_closure(t_global *game)
 	int	j;
 
 	i = 0;
-	j = 0;
-	while (game->map.grid[j][i])
+	while (game->map.grid[i])
 	{
-		if (game->map.grid[0][i] != '1' ||
-			game->map.grid[game->map.height - 1][i] != '1')
-			free_exit(game, "Invalid character on first or/and last line !", 1);
-		while (j > 0)
+		j = 0;
+		if (game->map.grid[i][0] != '1')
+			free_exit(game, "Invalid enclosure on left side !", 1);
+		else if (game->map.grid[i][game->map.width - 2] != '1')
+			free_exit(game, "Invalid enclosure on right side !", 1);
+		while (game->map.grid[i][j])
 		{
-			if (game->map.grid[j][game->map.width - 4] != '1' ||
-				game->map.grid[j][0] != '1')
-			{
-				free_exit(game, "Invalid enclosure on sides !", 1);
-			}
-			j--;
+			if (game->map.grid[0][j] != '1')
+				free_exit(game, "Invalid enclosure on top side !", 1);
+			else if (game->map.grid[game->map.height - 1][j] != '1')
+				free_exit(game, "Invalid enclosure on bottom side !", 1);
+			j++;
 		}
 		i++;
 	}
