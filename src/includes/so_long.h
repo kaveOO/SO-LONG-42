@@ -6,7 +6,7 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 14:12:36 by albillie          #+#    #+#             */
-/*   Updated: 2024/12/05 04:08:01 by albillie         ###   ########.fr       */
+/*   Updated: 2024/12/05 06:44:45 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 # define DRAW mlx_image_to_window
 # define SIZE 32
 
-# include "../minilibx/mlx42.h"
-# include "../libft/libft.h"
+# include "libft.h"
+# include "mlx42.h"
 # include <stdlib.h>
 # include <fcntl.h>
 # include <unistd.h>
