@@ -6,7 +6,7 @@
 #    By: albillie <albillie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/12 21:25:18 by albillie          #+#    #+#              #
-#    Updated: 2024/12/05 06:55:30 by albillie         ###   ########.fr        #
+#    Updated: 2024/12/05 07:31:12 by albillie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,6 @@ LIBMLX 		= $(MLX)/libmlx42.a
 
 LIB			= libft
 LIBFT		= $(LIB)/libft.a
-
 
 
 SRC 		=	src/args/parser.c			\
