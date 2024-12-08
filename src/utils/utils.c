@@ -6,18 +6,18 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 21:46:59 by albillie          #+#    #+#             */
-/*   Updated: 2024/12/05 12:45:18 by albillie         ###   ########.fr       */
+/*   Updated: 2024/12/08 18:59:45 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	write_debug(char *msg)
-{
-	write(2, "[DEBUG]", 7);
-	write(2, msg, ft_strlen(msg));
-	write(2, "\n", 1);
-}
+// void	write_debug(char *msg)
+// {
+// 	write(2, "[DEBUG]", 7);
+// 	write(2, msg, ft_strlen(msg));
+// 	write(2, "\n", 1);
+// }
 
 void	free_exit(t_global *game, char *msg, int status)
 {
