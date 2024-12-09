@@ -6,7 +6,7 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:10:51 by albillie          #+#    #+#             */
-/*   Updated: 2024/12/05 13:28:13 by albillie         ###   ########.fr       */
+/*   Updated: 2024/12/09 00:58:22 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,6 @@ void	check_map_size(t_global *game)
 			free_exit(game, "Invalid map line length on line !", 1);
 		}
 		i++;
-	}
-	if (game->map.width == game->map.height)
-	{
-		free_exit(game, "Your map is square !", 1);
 	}
 }
 
@@ -71,7 +67,7 @@ void	check_map_char(t_global *game)
 		j = 0;
 		while (game->map.grid[i][j])
 		{
-			if (!strchr(chars, game->map.grid[i][j]))
+			if (!ft_strchr(chars, game->map.grid[i][j]))
 			{
 				free_exit(game, "Invalid characters in map !", 1);
 			}

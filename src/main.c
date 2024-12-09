@@ -6,7 +6,7 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:09:31 by albillie          #+#    #+#             */
-/*   Updated: 2024/12/05 03:51:08 by albillie         ###   ########.fr       */
+/*   Updated: 2024/12/09 00:54:54 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	main(int argc, char **argv)
 	map_checker(game);
 	game->render.mlx = mlx_init((game->map.width - 1) * SIZE,
 			game->map.height * SIZE, "test", false);
+	if (!game->render.mlx)
+		free_exit(game, "MLX failed to init !", 1);
 	texture_loader(game);
 	map_drawer(game);
 	get_player_pos(game);

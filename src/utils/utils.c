@@ -6,7 +6,7 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 21:46:59 by albillie          #+#    #+#             */
-/*   Updated: 2024/12/08 18:59:45 by albillie         ###   ########.fr       */
+/*   Updated: 2024/12/09 01:44:32 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ void	get_height(t_global *game)
 	char	*line;
 
 	fd = open(game->map.filename, O_RDONLY);
+	if (fd < 0)
+		free_exit(game, "Failed to open map in get_height !", 1);
 	line = get_next_line(fd);
 	if (!line)
 	{
@@ -80,6 +82,8 @@ void	get_width(t_global *game)
 	char	*line;
 
 	fd = open(game->map.filename, O_RDONLY);
+	if (fd < 0)
+		free_exit(game, "Failed to open map in get_width !", 1);
 	line = get_next_line(fd);
 	if (!line)
 	{

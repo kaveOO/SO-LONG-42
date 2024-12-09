@@ -6,7 +6,7 @@
 /*   By: albillie <albillie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 14:12:36 by albillie          #+#    #+#             */
-/*   Updated: 2024/12/05 12:29:56 by albillie         ###   ########.fr       */
+/*   Updated: 2024/12/09 01:54:52 by albillie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,5 +106,6 @@ char	**copy_map(t_global *game);
 bool	verify_path(char **map);
 void	check_map(t_global *game);
 void	free_map(char **map);
+char	*get_and_trim(int fd);
 
 #endif
